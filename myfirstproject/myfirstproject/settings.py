@@ -135,3 +135,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),  # adjust the path based on your project structure
 ]
+MEDIA_URL = '/travel_images/'
+MEDIA_DIRS = [
+    os.path.join(BASE_DIR, 'media_cdn'),  # adjust the path based on your project structure
+]

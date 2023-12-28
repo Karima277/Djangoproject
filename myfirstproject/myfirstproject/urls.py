@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('myfirstapp.urls')),
     path('home/', include('myfirstapp.urls')),
+    path('travels/', include('myfirstapp.urls')),
     path('signup/', include('myfirstapp.urls')),
     path('login/', include('myfirstapp.urls')),
 

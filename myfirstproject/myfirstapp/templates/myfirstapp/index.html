@@ -1006,19 +1006,19 @@ video {
 }
 
 .bg-boat {
-  background-image: url(static/imgs/giphy.gif);
+  background-image: url(/static/imgs/giphy.gif);
 }
 
 .bg-header {
-  background-image: url(static/imgs/1.jpg);
+  background-image: url(/static/imgs/1.jpg);
 }
 
 .bg-map {
-  background-image: url(static/imgs/map1.png);
+  background-image: url(/static/imgs/map1.png);
 }
 
 .bg-sea {
-  background-image: url(static/imgs/15.jpg);
+  background-image: url(/static/imgs/15.jpg);
 }
 
 .bg-cover {
@@ -1788,9 +1788,9 @@ video {
             <nav class="h-[100%] md:w-[70%]">
                 <ul class="h-[100%] flex items-center gap-8 justify-end">
                     <li class="list-none  "><a class="decoration-none text-white hover:text-color3 transition-all duration-500"
-                            href="">Home</a></li>
+                            href="{% url 'home_page' %}">Home</a></li>
                     <li class="list-none"><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                            href="">About</a></li>
+                            href="{% url 'travels' %}">Tours</a></li>
                     <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
                             href="{% url 'login' %}">Log In</a></li>
                 </ul>
@@ -1814,10 +1814,11 @@ video {
                  href="">Home</a></li>
          <li class="list-none my-3"><a
                  class="decoration-none text-color2 flex  hover:text-color4  transition-all duration-600"
-                 href="">About</a></li>
+                 href="{% url 'travels' %}">Tours</a></li>
          <li class="list-none my-3"><a
                  class="decoration-none text-color2 flex  hover:text-color4 transition-all duration-600"
                  href="{% url 'login' %}">Log In</a></li>
+
      </ul>
  </nav>
 </header>
