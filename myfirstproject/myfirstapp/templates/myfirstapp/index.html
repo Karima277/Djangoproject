@@ -1772,7 +1772,7 @@ video {
 }
     </style>
     
-    <link rel="stylesheet" href="templates/myfirstapp/css/output.css">
+    <link rel="stylesheet" href="{% static 'output.css' %}">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
@@ -1792,15 +1792,7 @@ video {
                     <li class="list-none"><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
                             href="">About</a></li>
                     <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                            href="">Tours</a></li>
-                    <li class="list-none"><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                            href="">Destination</a></li>
-                    <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                            href="">Blog</a></li>
-                    <li class="list-none"><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                            href="">Gallery</a></li>
-                    <li class="list-none"><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                            href="">Contact</a></li>
+                            href="{% url 'login' %}">Log In</a></li>
                 </ul>
             </nav>
         </header>
@@ -1809,7 +1801,8 @@ video {
  <header
  class="w-[95%] sm:w-[70%] md:w-[80%] container flex h-[60px] justify-between  items-center  lg:hidden  py-[45px] relative border-b-[1px] border-white border-opacity-40 ">
  <figure class="w-[140px]">
-    <img src="{% static 'imgs/logo-light.png' %}" alt="" class="w-[100%]">
+    <img src="{% static 'imgs/logo-light.png' %}
+    " alt="" class="w-[100%]">
  </figure>
  <div class=" w-1/2 h-full flex justify-end items-center ">
      <i class="bi bi-list text-3xl text-white cursor-pointer ham-menu-icon"></i>
@@ -1824,19 +1817,7 @@ video {
                  href="">About</a></li>
          <li class="list-none my-3"><a
                  class="decoration-none text-color2 flex  hover:text-color4 transition-all duration-600"
-                 href="">Tours</a></li>
-         <li class="list-none my-3"><a
-                 class="decoration-none text-color2 flex  hover:text-color4 transition-all duration-600"
-                 href="">Destination</a></li>
-         <li class="list-none my-3"><a
-                 class="decoration-none text-color2 flex   hover:text-color4  transition-all duration-600"
-                 href="">Blog</a></li>
-         <li class="list-none my-3"><a
-                 class="decoration-none text-color2 flex  hover:text-color4  transition-all duration-600"
-                 href="">Gallery</a></li>
-         <li class="list-none my-3"><a
-                 class="decoration-none text-color2 flex   hover:text-color4 transition-all duration-600"
-                 href="">Contact</a></li>
+                 href="{% url 'login' %}">Log In</a></li>
      </ul>
  </nav>
 </header>
