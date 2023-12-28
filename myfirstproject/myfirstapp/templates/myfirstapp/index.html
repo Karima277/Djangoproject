@@ -1834,52 +1834,57 @@ video {
    <section class="w-full justify-center mt-[80px] hidden lg:flex relative">
         <div class=" bg-white bg-opacity-40 container absolute w-[1000px] xl:w-[1200px] h-[100px] flex justify-center items-center backdrop-blur-lg">
                 <div class="w-[950px] xl:w-[1100px]  container h-auto absolute m-[10px]  ">
-                        <form action="" class="flex font-primary"> 
-                                <input type="text" placeholder="where to?" class="py-[15px] ps-5 w-[25%] outline-none focus:outline-none">
-                                <select name="" id="" class="w-[25%] py-[15px] bg-white  ps-5" id="target">
+                        <form action="{% url 'search_results' %}" method="GET" class="flex font-primary"> 
+                                <input name="max_price" type="text" placeholder="price max" class="py-[15px] ps-5 w-[25%] outline-none focus:outline-none">
+                                <select name="destination" id="" class="w-[25%] py-[15px] bg-white  ps-5" id="target">
                                         <option value="dest" selected   class="bg-color1 text-white">Destination</option>
-                                        <option value="it" class="text-stone-600" >Italy</option>
-                                        <option value="fr" class="text-stone-600">France</option>
-                                        <option value="mal" class="text-stone-600" >Maldives</option>
-                                        <option value="gr" class="text-stone-600" >Greece</option>
-                                        <option value="ca" class="text-stone-600" >Canada</option>
-                                        <option value="du" class="text-stone-600"> Dubai</option>
+                                        <option value="Italy" class="text-stone-600" >Italy</option>
+                                        <option value="France" class="text-stone-600">France</option>
+                                        <option value="Maldives" class="text-stone-600" >Maldives</option>
+                                        <option value="Greece" class="text-stone-600" >Greece</option>
+                                        <option value="Canada" class="text-stone-600" >Canada</option>
+                                        <option value="Dubai" class="text-stone-600"> Dubai</option>
+                                        <option value="Saudi-Arabia" class="text-stone-600"> Saudi-Arabia</option>
                                 </select>
-                                <select name="" id="" class="w-[25%] py-[15px] bg-white  ps-5" id="target">
-                                        <option value="du" selected   class="bg-color1 text-white">Deuration</option>
-                                        <option value="it" class="text-stone-600" >1 Day Tour</option>
-                                        <option value="fr" class="text-stone-600">2-4 Days Tour</option>
-                                        <option value="mal" class="text-stone-600" >5-7 Days Tour</option>
-                                        <option value="gr" class="text-stone-600" >7+ Days Tour</option>
+                                <select name="duration" id="" class="w-[25%] py-[15px] bg-white  ps-5" id="target">
+                                        <option value="0" selected   class="bg-color1 text-white">Deuration</option>
+                                        <option value="1" class="text-stone-600" >1 Day Tour</option>
+                                        <option value="2" class="text-stone-600">2-4 Days Tour</option>
+                                        <option value="5" class="text-stone-600" >5-7 Days Tour</option>
+                                        <option value="7" class="text-stone-600" >7+ Days Tour</option>
                                 </select> 
-                               <a href="" role="button" class="bg-color1 w-[25%] text-white flex items-center justify-center text-[18px] hover:bg-color3 transition-all duration-500" ><i class="bi bi-search me-2"></i>Find Now</a>
-                        </form>
+                                <button type="submit" class="bg-color1 w-[25%] text-white flex items-center justify-center text-[18px] hover:bg-color3 transition-all duration-500">
+                                  <i class="bi bi-search me-2"></i>Find Now
+                              </button>                        </form>
                 </div>
         </div>
    </section>
     </section>
     <section class="w-full flex lg:hidden justify-center  bg-color5">
       <div class="w-full container flex justify-center py-10">
-        <form action="" class="w-[80%] " >
-                <input type="text" placeholder="where to?" class="w-full py-5 ps-5"><br>
-                <select name="" id="" class="w-full py-5 bg-white  ps-5" >
+        <form action="{% url 'search_results' %}" method="GET" class="w-[80%] " >
+                <input name="max_price" type="text" placeholder="price max" class="w-full py-5 ps-5"><br>
+                <select name="destination" id="" class="w-full py-5 bg-white  ps-5" >
                         <option value="dest" selected   class="bg-color1 text-white">Destination</option>
-                        <option value="it" class="text-stone-600" >Italy</option>
-                        <option value="fr" class="text-stone-600">France</option>
-                        <option value="mal" class="text-stone-600" >Maldives</option>
-                        <option value="gr" class="text-stone-600" >Greece</option>
-                        <option value="ca" class="text-stone-600" >Canada</option>
-                        <option value="du" class="text-stone-600"> Dubai</option>
+                        <option value="Italy" class="text-stone-600" >Italy</option>
+                        <option value="France" class="text-stone-600">France</option>
+                        <option value="Maldives" class="text-stone-600" >Maldives</option>
+                        <option value="Greece" class="text-stone-600" >Greece</option>
+                        <option value="Canada" class="text-stone-600" >Canada</option>
+                        <option value="Dubai" class="text-stone-600"> Dubai</option>
+                        <option value="Saudi-Arabia" class="text-stone-600"> Saudi-Arabia</option>
                 </select><br>
-                <select name="" id="" class="w-full py-5 bg-white  ps-5" >
-                        <option value="du" selected   class="bg-color1 text-white">Deuration</option>
-                        <option value="it" class="text-stone-600" >1 Day Tour</option>
-                        <option value="fr" class="text-stone-600">2-4 Days Tour</option>
-                        <option value="mal" class="text-stone-600" >5-7 Days Tour</option>
-                        <option value="gr" class="text-stone-600" >7+ Days Tour</option>
+                <select  name="duration" id="" class="w-full py-5 bg-white  ps-5" >
+                        <option value="0" selected   class="bg-color1 text-white">Deuration</option>
+                        <option value="1" class="text-stone-600" >1 Day Tour</option>
+                        <option value="2" class="text-stone-600">2-4 Days Tour</option>
+                        <option value="5" class="text-stone-600" >5-7 Days Tour</option>
+                        <option value="7" class="text-stone-600" >7+ Days Tour</option>
                 </select><br>
-                <a href="" role="button" class="bg-color1 py-5 w-full text-white flex items-center justify-center text-[18px] hover:bg-color3 transition-all duration-500" ><i class="bi bi-search me-2"></i>Find Now</a>
-        </form>
+                <button type="submit" class="bg-color1 py-5 w-full text-white flex items-center justify-center text-[18px] hover:bg-color3 transition-all duration-500">
+                  <i class="bi bi-search me-2"></i>Find Now
+              </button>
+                      </form>
       </div>
     </section>
     <section class="w-full flex justify-center bg-color5 h-auto">
