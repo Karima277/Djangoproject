@@ -84,9 +84,13 @@ def signup(request):
 
 
 
+# views.py
+from django.contrib.auth import login
+from .forms import LoginForm  # Import your LoginForm
+
 def login_view(request):
     if request.method == 'POST':
-        form = LoginForm(request, request.POST)
+        form = LoginForm(request, data=request.POST)  # Corrected line
         if form.is_valid():
             user = form.get_user()
             login(request, user)
@@ -96,3 +100,4 @@ def login_view(request):
         form = LoginForm()
 
     return render(request, 'myfirstapp/login.html', {'form': form})
+
