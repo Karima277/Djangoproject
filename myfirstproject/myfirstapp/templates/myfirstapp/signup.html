@@ -340,7 +340,7 @@ li.fb a::before {
     <div class="main-container">
         <div class="form-container">
 
-            <div class="srouce">Bssayla Everywhere</a></div>
+            <H2 class="srouce">Create your account</a></H2>
 
             <div class="form-body">
                 <h2 class="title">Log in with</h2>
@@ -353,26 +353,18 @@ li.fb a::before {
 
                 <div class="_or">or</div>
 
-                <form action="" class="the-form">
+              
 
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email" placeholder="Enter your email">
-
-                    <label for="password">Password</label>
-                    <input type="password" name="password" id="password" placeholder="Enter your password">
-
-                    <label for="confirm_password">Confirm Password</label>
-                    <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm your password">
-
-                    <label for="full_name">Full Name</label>
-                    <input type="text" name="full_name" id="full_name" placeholder="Enter your Full name">
-                    <!-- bith date -->
-
-                    <label for="birth_date">Birth Date</label>
-                    <input type="date" name="birth_date" id="birth_date" >
+                {% load widget_tweaks %}
+                <form action="" method="post" class="the-form">
+                    {% csrf_token %}
+                
+                    {% include 'myfirstapp/myform.html' %}
+                  
                     <input type="submit" value="Sign Up">
-
                 </form>
+                
+
 
             </div><!-- FORM BODY-->
 

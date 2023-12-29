@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myfirstapp',
-     
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +49,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
 ]
 
 ROOT_URLCONF = 'myfirstproject.urls'
@@ -141,3 +143,8 @@ MEDIA_URL = '/travel_images/'
 MEDIA_DIRS = [
     os.path.join(BASE_DIR, 'media_cdn'),  # adjust the path based on your project structure
 ]
+# settings.py
+AUTH_USER_MODEL = 'myfirstapp.CustomUser'
+CSRF_USE_SESSIONS = True
+CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'
+

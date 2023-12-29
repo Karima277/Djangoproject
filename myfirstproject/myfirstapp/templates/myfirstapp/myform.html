@@ -1,0 +1,42 @@
+<style>/* Add this to your CSS file or style section */
+    .form-field {
+        margin-bottom: 20px;
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    
+    .input-wrapper {
+        position: relative;
+    }
+    
+    /* Adjust these styles based on your design preferences */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"] {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        margin-bottom: 8px;
+    }
+    
+    .error {
+        color: red;
+        margin-top: 5px;
+        font-size: 20px;
+    }
+    </style>
+
+
+{% for field in form %}
+    <div class="your-custom-class">
+        {{ field.label_tag }} {{ field }}
+        {% if field.errors %}
+            <div class="error">{{ field.errors|striptags }}</div>
+        {% endif %}
+    </div>
+{% endfor %}

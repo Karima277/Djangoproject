@@ -1,10 +1,12 @@
+
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Log In</title>
     <link href="https://fonts.googleapis.com/css2?family=Muli:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
@@ -338,7 +340,7 @@ li.fb a::before {
     <div class="main-container">
         <div class="form-container">
 
-            <div class="srouce">Bssayla Everywhere</a></div>
+            <h2 class="srouce">Log to your profile</a></h2>
 
             <div class="form-body">
                 <h2 class="title">Log in with</h2>
@@ -351,17 +353,32 @@ li.fb a::before {
 
                 <div class="_or">or</div>
 
-                <form action="" class="the-form">
 
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email" placeholder="Enter your email">
+                <form action="{% url 'login_view' %}" method="post" class="the-form">
+                  
+                  {% csrf_token %}
+                  {% if messages %}
+                  <ul class="messages">
+                    {% for message in messages %}
+                      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
 
-                    <label for="password">Password</label>
-                    <input type="password" name="password" id="password" placeholder="Enter your password">
+                  {% csrf_token %}
+                  {% include 'myfirstapp/myform.html' %}
+                  
+                  {% if form.non_field_errors %}
+                      <div class="alert alert-danger">
+                          {% for error in form.non_field_errors %}
+                              {{ error }}
+                          {% endfor %}
+                      </div>
+                  {% endif %}
 
-                    <input type="submit" value="Log In">
-
+                  <input type="submit" value="Log In">
                 </form>
+
 
             </div><!-- FORM BODY-->
 

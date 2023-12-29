@@ -1,8 +1,14 @@
 from django.shortcuts import render
 from .models import Travel
-from django.shortcuts import render
 from django.db.models import Q
 from .models import Promotion
+from django.shortcuts import redirect
+from .forms import SignUpForm
+from .forms import LoginForm
+from django.contrib import messages
+from django.contrib.auth import login
+from django.contrib.auth.forms import AuthenticationForm
+from django.views.decorators.csrf import csrf_protect
 def home(request):
     return render(request, 'myfirstapp/index.html')
 
@@ -61,3 +67,32 @@ def apply_promotion(travel):
     if promotion and promotion.start_date <= date.today() <= promotion.end_date:
         travel.price -= travel.price * (promotion.discount_percentage / 100)
     return travel
+# views.py
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Additional logic like login the user, send confirmation email, etc.
+            return redirect('home_page')  # Redirect to the home page or any other desired page
+    else:
+        form = SignUpForm()
+
+    return render(request, 'myfirstapp/signup.html', {'form': form})
+
+
+
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request, request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            # Redirect to the user's profile or any other desired page
+            return redirect('profile')  # Replace 'profile' with the actual URL name for your profile page
+    else:
+        form = LoginForm()
+
+    return render(request, 'myfirstapp/login.html', {'form': form})
