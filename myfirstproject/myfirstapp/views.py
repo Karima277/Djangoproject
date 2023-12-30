@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from .forms import SignUpForm
 from .forms import LoginForm
 from django.contrib import messages
-from django.contrib.auth import login
+from django.contrib.auth import login,logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.views.decorators.csrf import csrf_protect
 # views.py
@@ -92,17 +92,19 @@ def signup(request):
 
 
 
-@requires_csrf_token
 def login_view(request):
     if request.method == 'POST':
-        form = LoginForm(request, data=request.POST)  # Corrected line
+        form = LoginForm(data=request.POST)
         if form.is_valid():
+            # Login the user
             user = form.get_user()
             login(request, user)
-            # Redirect to the user's profile or any other desired page
-            return redirect('profile')  # Replace 'profile' with the actual URL name for your profile page
+            return redirect('home_page')  # Redirect to a success page
     else:
         form = LoginForm()
 
     return render(request, 'myfirstapp/login.html', {'form': form})
 
+def logout_view(request):
+    logout(request)
+    return redirect('home_page')
