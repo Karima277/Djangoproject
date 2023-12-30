@@ -9,14 +9,20 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
 from django.views.decorators.csrf import csrf_protect
+# views.py
+from .forms import LoginForm  # Import your LoginForm
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import requires_csrf_token
+
 def home(request):
     return render(request, 'myfirstapp/index.html')
-
+def profile(request):
+    return render(request,'myfirstapp/profile.html')
 def signup(request):
     return render(request, 'myfirstapp/signup.html')
 
-def login(request):
-    return render(request, 'myfirstapp/login.html')
+# def login(request):
+#     return render(request, 'myfirstapp/login.html')
 def travels(request):
     context={'Travels': Travel.objects.all()}
     return render(request, 'myfirstapp/travels.html',context)
@@ -84,12 +90,6 @@ def signup(request):
 
 
 
-# views.py
-from django.contrib.auth import login
-from .forms import LoginForm  # Import your LoginForm
-from django.views.decorators.csrf import csrf_protect
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.csrf import requires_csrf_token
 
 
 @requires_csrf_token
