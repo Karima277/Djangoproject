@@ -87,7 +87,12 @@ def signup(request):
 # views.py
 from django.contrib.auth import login
 from .forms import LoginForm  # Import your LoginForm
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import requires_csrf_token
 
+
+@requires_csrf_token
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request, data=request.POST)  # Corrected line
