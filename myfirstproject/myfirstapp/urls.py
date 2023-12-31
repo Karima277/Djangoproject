@@ -1,11 +1,13 @@
 from django.urls import path
 from .views import home, signup,travels,cart
-from .views import login_view,profile
+from .views import login_view,profile,reserve,success
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from . import views
+from django.urls import path
+
 urlpatterns = [
     
     path('', home, name='home'),
@@ -20,6 +22,9 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout_view'),
     path('cart/', cart, name='cart'),
     path('travel_details/<int:travel_id>/', views.travel_details, name='travel_details'),
+    path('reserve/', reserve, name='reserve'), 
+    path('success/', success, name='success_page')
+ 
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

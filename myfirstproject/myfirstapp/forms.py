@@ -31,3 +31,4 @@ class LoginForm(AuthenticationForm):
             'username': forms.TextInput(attrs={'placeholder': 'Enter your email'}),
             'password': forms.PasswordInput(attrs={'placeholder': 'Enter your password'}),
         }
+# forms.py

@@ -23,7 +23,8 @@ def signup(request):
     return render(request, 'myfirstapp/signup.html')
 def cart(request):
     return render(request, 'myfirstapp/cart.html')
-
+def success(request):
+    return render(request, 'myfirstapp/success.html')
 
 def travel_details(request, travel_id):
     travel = get_object_or_404(Travel, id=travel_id)
@@ -115,3 +116,36 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('home_page')
+
+
+from django.shortcuts import render, redirect
+from .models import Reservation
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def reserve(request):
+    if request.method == 'POST':
+        # Retrieve form data from the POST request
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        address = request.POST.get('address')
+        card_number = request.POST.get('cardnumber')
+        expiration_date = request.POST.get('expiration')
+        cvv = request.POST.get('cvv')
+
+        # Create a reservation object and save it to the database
+        reservation = Reservation(
+            user=request.user,
+            name=name,
+            email=email,
+            address=address,
+            card_number=card_number,
+            expiration_date=expiration_date,
+            cvv=cvv
+        )
+        reservation.save()
+
+        # You can add additional logic or redirect the user to a success page
+        return redirect('success_page')
+
+    return render(request, 'your_template.html')

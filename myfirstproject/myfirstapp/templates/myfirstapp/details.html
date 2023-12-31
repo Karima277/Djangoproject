@@ -2087,45 +2087,50 @@ body{
                 </div>
                 <div class="col-md-6 p-4">
                   <h1 id="a1">Reservation </h1>
-                    <form action="">
-                        
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email">
-                        </div>
-                        <div class="mb-3">
-                            <label for="address" class="form-label">Address</label>
-                            <textarea class="form-control" id="address"></textarea>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="cardnumber" class="form-label">Credit Card Number</label>
-                                    <input type="text" class="form-control" id="cardnumber">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="mb-3">
-                                    <label for="expiration" class="form-label">Expiration Date</label>
-                                    <input type="text" class="form-control" id="expiration">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="mb-3">
-                                    <label for="cvv" class="form-label">CVV</label>
-                                    <input type="text" class="form-control" id="cvv">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-end">
-                          <button type="submit" style="background-color: #669DB2;" class="btn btn-primary mt-4"> Reserve</button>
+                    <!-- details.html -->
+<form method="post" action="{% url 'reserve' %}">
+  {% csrf_token %}
+  <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control" id="name" name="name" required>
+  </div>
+  <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" name="email" required>
+  </div>
+  <div class="mb-3">
+      <label for="address" class="form-label">Address</label>
+      <textarea class="form-control" id="address" name="address" required></textarea>
+  </div>
+  <div class="row">
+      <div class="col-md-6">
+          <div class="mb-3">
+              <label for="cardnumber" class="form-label">Credit Card Number</label>
+              <input type="text" class="form-control" id="cardnumber" name="cardnumber" required>
+          </div>
+      </div>
+      <div class="col-md-3">
+          <div class="mb-3">
+              <label for="expiration" class="form-label">Expiration Date</label>
+              <input type="text" class="form-control" id="expiration" name="expiration" required>
+          </div>
+      </div>
+      <div class="col-md-3">
+          <div class="mb-3">
+              <label for="cvv" class="form-label">CVV</label>
+              <input type="text" class="form-control" id="cvv" name="cvv" required>
+          </div>
+      </div>
+  </div>
+  <div class="text-end">
+    {% if user.is_authenticated %}
+      <button type="submit" style="background-color: #669DB2;" class="btn btn-primary mt-4"> Reserve</button>
+    {% else %}
+    <p> <a href="{% url 'login_view' %}">Please login to make a reservation. </a></p>
+    {% endif %}
+  </div>
+</form>
 
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
