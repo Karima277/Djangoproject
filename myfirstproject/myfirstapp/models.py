@@ -27,9 +27,6 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.username
 
-
-    def __str__(self):
-        return self.username
 class Promotion(models.Model):
     name = models.CharField(max_length=255)
     discount_percentage = models.DecimalField(max_digits=5, decimal_places=2)

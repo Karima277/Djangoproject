@@ -1,12 +1,177 @@
 {%load static%}
-<html>
-  <head>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HR</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+    <!-- style css -->
     <style>
+        * {
+  font-family: "Montserrat", sans-serif;
+}
+
+img.img-fluid.logo {
+  width: 100px;
+  border-radius: 20px 5px;
+}
+
+.nav-link.active,
+.nav-link:hover {
+  border-bottom: 2px solid black;
+}
+
+.nav-link {
+  border-bottom: 2px solid transparent;
+}
+
+/* hero */
+.hero {
+  padding-top: 400px;
+  background: url("../img/hero.jpg") no-repeat center center;
+  background-size: cover;
+}
+
+.bg-orange {
+  background-color: #e4a00e;
+}
+
+.btn-orange {
+  background-color: #e4a00e;
+  border: none;
+  color: white;
+  padding: 15px 25px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none !important;
+  box-shadow: unset !important;
+}
+
+#promo {
+  cursor: pointer;
+  display: block;
+}
+
+#promo.inactive {
+  display: none;
+}
+
+#promo-holder {
+  display: none;
+}
+
+#promo-holder.active {
+  display: block;
+}
+
+.availability input {
+  font-size: 20px;
+}
+
+.availability.mt-4 {
+  position: relative;
+  top: 50px !important;
+  margin-top: 0px !important;
+  margin-bottom: 100px !important;
+}
+
+.ls-3 {
+  letter-spacing: 5px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: 0.6s;
+  transform: translateY(100%);
+}
+
+.img-holder:hover .info {
+  transform: translateY(0%);
+}
+
+.hotel-icons p {
+  font-size: 14px;
+}
+
+.navbar-toggler {
+  border: unset !important;
+}
+
+button:focus {
+  outline: unset !important;
+  box-shadow: unset !important;
+}
+
+@media screen and (max-width: 992px) {
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  li.nav-item.ms-4 {
+    margin-left: 5px !important;
+    margin-top: 10px;
+    margin-right: 5px !important;
+  }
+
+  .topbar .d-flex {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .topbar p:first-child {
+    margin-bottom: 10px !important;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+  }
+
+  .reservation .col-md-6,
+  .reservation .col-md-3 {
+    padding: 25px !important;
+  }
+}
 
       /*
 ! tailwindcss v3.3.5 | MIT License | https://tailwindcss.com
@@ -72,6 +237,7 @@ margin: 0;
 /* 1 */
 line-height: inherit;
 /* 2 */
+
 }
 
 /*
@@ -233,17 +399,7 @@ text-transform: none;
 2. Remove default button styles.
 */
 
-button,
-[type='button'],
-[type='reset'],
-[type='submit'] {
-/*-webkit-appearance: button;
-/* 1 */
-background-color: transparent;
-/* 2 */
-background-image: none;
-/* 2 */
-}
+
 
 /*
 Use the modern Firefox focus style for all focusable elements.
@@ -273,10 +429,7 @@ vertical-align: baseline;
 Correct the cursor style of increment and decrement buttons in Safari.
 */
 
-::-webkit-inner-spin-button,
-::-webkit-outer-spin-button {
-height: auto;
-}
+
 
 /*
 1. Correct the odd appearance in Chrome and Safari.
@@ -303,12 +456,6 @@ Remove the inner padding in Chrome and Safari on macOS.
 2. Change font properties to `inherit` in Safari.
 */
 
-::-webkit-file-upload-button {
--webkit-appearance: button;
-/* 1 */
-font: inherit;
-/* 2 */
-}
 
 /*
 Add the correct display in Chrome and Safari.
@@ -395,10 +542,7 @@ color: #9ca3af;
 Set the default cursor for buttons.
 */
 
-button,
-[role="button"] {
-cursor: pointer;
-}
+
 
 /*
 Make sure disabled buttons don't get the pointer cursor.
@@ -1774,17 +1918,18 @@ width: 90%;
     
 body{
   /*background-color: #eeeeee;*/
-   background-image: url(/static/imgs/1.jpg);
+  
    background-position: center;
 }
 
 .card {
   margin-bottom: 30px;
+  background-color: #669DB2;
 }
 /* Change the color of the title and text to blue */
-.card-title, .card-text {
+/* .card-title, .card-text {
   color:black;
-}
+} */
 
 .price{
   color: #4E5E69 !important;
@@ -1801,10 +1946,10 @@ body{
 
 
 /* Style the number of rooms, surface, and price to become bold and underlined on hover */
-.card-text:hover span {
+/* .card-text:hover span {
   font-weight: bold;
   text-decoration: underline;
-}
+} */
 
 .card-img-top {
   height: 225px;
@@ -1814,6 +1959,7 @@ body{
 .card-text {
   font-size: 1.1rem;
   line-height: 1.5;
+  text-align: center;
 }
 
 .btn-group {
@@ -1833,7 +1979,7 @@ body{
 }
 
 .btn-outline-secondary:hover {
-  color: #fff;
+  /*color: #fff;*/
   background-color:  #9cbcd3;
 }
 .btn-outline-secondary:active, 
@@ -1845,298 +1991,176 @@ body{
   box-shadow: none !important;
 
 }
-.chat-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #fff;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  z-index: 9999;
+#a1{
+  color: black;
+  size: 200%;
+  text-align:center ;
 }
+    </style>
+</head>
 
-.chat-icon i {
-  color: #333;
-  font-size: 28px;
-}
-
-.chat-container {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  width: 300px;
-  height: 400px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  display: none;
-  z-index: 9998;
-}
-
-.chat-header {
-  padding: 10px;
-  background-color: #f5f5f5;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.chat-header h3 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.close-btn {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.close-btn i {
-  color: #333;
-  font-size: 18px;
-}
-
-.chat-body {
-  height: 300px;
-  overflow-y: scroll;
-  padding: 10px;
-}
-
-.chat-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-top: 1px solid #eee;
-}
-
-.chat-footer input {
-  border: none;
-  padding: 10px;
-  width: 100%;
-  border-radius: 3px;
-  margin-right: 10px;
-  font-size: 14px;
-  outline: none;
-}
-
-.chat-footer button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding:5px 10px;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.chat-footer button:hover {
-background-color: #0069d9;
-}
-.chat-icon {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: #0069d9;
-  cursor: pointer;
-  animation: bounce 1s ease infinite alternate;
-}
-
-@keyframes bounce {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-10px);
-  }
-}
-#n{
-    background-color: #79BFCE;
-}
- </style></head>
- <body >
-    <div class="chat-icon">
-        <i style="color: white;" class="fas fa-comment-alt"></i>
-      </div>
-      
-      <div class="chat-container">
-        <div class="chat-header">
-          <h3> Kay, votre assistant virtuel</h3>
-          <button class="close-btn"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="chat-body">
-          <!-- Chat messages will be displayed here -->
-        </div>
-        <div class="chat-footer">
-          <input type="text" placeholder="Type your message...">
-          <button class="send-btn"><i class="fas fa-paper-plane"></i></button>
-        </div>
-      </div>
-      <script>
-  const chatIcon = document.querySelector('.chat-icon');
-  const chatContainer = document.querySelector('.chat-container');
-  const closeBtn = document.querySelector('.close-btn');
-  const sendBtn = document.querySelector('.send-btn');
-  const chatBody = document.querySelector('.chat-body');
-  const inputField = document.querySelector('input');
-  
-  let isChatOpen = false;
-  
-  // Toggle the visibility of the chat container
-  chatIcon.addEventListener('click', () => {
-    isChatOpen = !isChatOpen;
-    if (isChatOpen) {
-      chatContainer.style.display = 'block';
-    } else {
-      chatContainer.style.display = 'none';
-    }
-  });
-  
-  // Close the chat container when the close button is clicked
-  closeBtn.addEventListener('click', () => {
-    isChatOpen = false;
-    chatContainer.style.display = 'none';
-  });
-  
-  // Send a message when the send button is clicked
-  sendBtn.addEventListener('click', () => {
-    const message = inputField.value;
-    sendMessage(message);
-  });
-  
-  // Send a message when the enter key is pressed
-  inputField.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-      const message = inputField.value;
-      sendMessage(message);
-    }
-  });
-  
-  // Send a message to the chatbot and receive a response
-  function sendMessage(message) {
-    if (message.trim() === '') {
-      return;
-    }
-    const chatMessage = document.createElement('div');
-    chatMessage.classList.add('chat-message', 'outgoing');
-    chatMessage.textContent = message;
-    chatBody.appendChild(chatMessage);
-    inputField.value = '';
-    setTimeout(() => {
-      const response = getResponse(message);
-      const chatMessage = document.createElement('div');
-      chatMessage.classList.add('chat-message', 'incoming');
-      chatMessage.textContent = response;
-      chatBody.appendChild(chatMessage);
-      chatBody.scrollTop = chatBody.scrollHeight;
-    }, 1000);
-  }
-  
-  // Get a response from the chatbot based on the user's message
-  function getResponse(message) {
-    const keywords = {
-      acheter: "Chez nous, l'achat de votre propriété idéale est facile ! Que vous cherchiez une maison, un appartement ou un terrain, sélectionnez simplement le type de bien dans le menu en haut, ou remplissez le formulaire d'achat à l'accueil pour trouver la perle rare.",
-      vendre: "Vous souhaitez vendre votre bien rapidement et efficacement ? C'est facile avec Kay! Commencez par sélectionner le type de bien dans le menu en haut,puis continuez en remplissant notre formulaire détaillé pour décrire les caractéristiques de votre bien.",
-      louer: 'Vous cherchez un logement à louer ? Kay en ligne vous simplifie la vie ! Il vous suffit de sélectionner le type de bien que vous recherchez dans le menu en haut, puis de remplir notre formulaire de demande de location pour nous faire part de vos critères.',
-    };
-    const words = message.toLowerCase().split(' ');
-    for (const word of words) {
-      if (keywords[word]) {
-        return keywords[word];
+<body>
+    <!-- topbar -->
+    <style>
+      .blue-topbar {
+          background-color: #242525;
+          color: white; /* Text color */
       }
-    }
-    return "I'm sorry, I didn't understand your message.";
-  }
+      #a{
+        color: green !important;
+        text-align: center !important;
+      }
+  </style>
   
-      </script>
-
   
+  
+    <!-- topbar -->
 
-<section class="w-full h-[100vh]  bg-header  bg-cover bg-no-repeat bg-center bg-color1 bg-blend-multiply bg-opacity-60 " >
-  <section class="w-full flex flex-wrap justify-center ">
+    <!-- header -->
+
+    <section class="header" style="background-color: #669DB2;">
       <header 
       class="w-[85%]  xl:w-[73%]  container hidden lg:flex justify-between h-[60px]  items-center py-[45px] border-b-[1px] border-white border-opacity-40">
-      <figure class="w-[140px]">
-         <img src="{% static 'imgs/logo-light.png' %}" alt="" class="w-[100%]">
-      </figure>
-      <nav class="h-[100%] md:w-[70%]">
-          <ul class="h-[100%] flex items-center gap-8 justify-end">
-              <li class="list-none  "><a class="decoration-none text-white hover:text-color3 transition-all duration-500"
-                      href="{% url 'home_page' %}">Home</a></li>
-              <li class="list-none"><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                      href="{% url 'travels' %}">Tours</a></li>
-              {% if user.is_superuser %}
-              <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                href="{% url 'admin:index' %}">Admin</a></li>
-              <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                href="{% url 'logout_view' %}">Log out</a></li>
-              {% elif user.is_authenticated %}
-              <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                href="{% url 'profile' %}">Profile</a></li>
-              <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                href="{% url 'logout_view' %}">Log out</a></li>
-              {% else %}
-              <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                      href="{% url 'login_view' %}">Log In</a></li>
-              {% endif %}
-          </ul>
-      </nav>
-  </header>
-  <div class="container" style="margin-top: 20px;">
+      <figure class="w-[140px]"><a href="{% url 'home_page' %}">
+        <img src="{% static 'imgs/logo-light.png' %}" alt="" class="w-[100%]"></a>
+     </figure>
+        <nav class="h-[100%] md:w-[70%]">
+            <ul class="h-[100%] flex items-center gap-8 justify-end">
+                <li class="list-none  "><a class="decoration-none text-white hover:text-color3 transition-all duration-500"
+                        href="{% url 'home_page' %}">Home</a></li>
+                <li class="list-none"><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                        href="{% url 'travels' %}">Tours</a></li>
+                {% if user.is_superuser %}
+                <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                  href="{% url 'admin:index' %}">Admin</a></li>
+                <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                  href="{% url 'logout_view' %}">Log out</a></li>
+                {% elif user.is_authenticated %}
+                <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                  href="{% url 'profile' %}">Profile</a></li>
+                <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                  href="{% url 'logout_view' %}">Log out</a></li>
+                {% else %}
+                <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                        href="{% url 'login_view' %}">Log In</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        </header>
+        <section class="topbar blue-topbar py-2 border-bottom border-dark">
+          <div class="container">
+              <div class="d-flex justify-content-between align-items-center">
+                  <p class="mb-0 text-white">
+                      Directly contact us for reservation: <a href="tel:1234567890"
+                          class="text-white text-decoration-none">1234567890</a>
+                  </p>
+              </div>
+          </div>
+      </section>
+    </section>
     
-    
-    
-    <div class="row" style="margin-top: 40px;">
-        {% for travel in Travels%}
-            <div class="col-md-4" >
-                <div class="card mb-4 box-shadow">
-                <img class="card-img-top" src="{{travel.image.url}}" alt="Maison">
-                <div  class="card-body">
-                    <h6 class="card-title d-inline-block align-middle"></h5>
-                    <div class="float-right">
-                        {% if travel.promotion %}
-                        <p class="card-subtitle mb-2 text-muted d-inline-block align-middle">
+    <!-- header -->
+
+
+
+    <!-- checkout -->
+    <section class="checkout py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 p-4">
+                    <div class="card border-0">
+                        <img src="{{ travel.image.url }}" class="card-img-top" alt="Room Image">
+                        <div class="card-body px-0">
+                          {% if travel.promotion %}
+                        <h2 class="card-subtitle mb-2 text-muted d-inline-block align-middle" id="a">
                              {{ travel.promotion.name }} ({{ travel.promotion.discount_percentage }}% off)
-                        </p>
+                        </h2>
+                           {%else%}
+                            <h2 style="text-align: center;" class="card-title ls-3">Best Holidays eveer in</h2>
                             {% endif %}
-                        <h6 class="card-subtitle mb-2 text-muted d-inline-block align-middle price text-right" > {{travel.price}}DH</h6>
-                    </div>
-                    <p class="card-text mt-3">
-                    <span class="badge badge-secondary mr-2">{{travel.city}}</span>
-                    <span class="badge badge-secondary mr-2">{{travel.destination}}</span>
-                   
-                    </p>
-                    
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                    <div class="btn-group">
-                        <a href="{% url 'travel_details' travel.id %}" class="btn btn-sm btn-outline-secondary">Details</a>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Add to cart</button>
-                    </div>
+                            <p class="card-text mb-0">{{ travel.city }}</p>
+                            <p class="card-text mb-0">{{ travel.destination }}</p>
+                            <p class="card-text mb-0">just {{ travel.price }} DH </p>
+                            <p class="card-text mb-0">for {{ travel.duration_days }} Days</p>
+                        </div>
                     </div>
                 </div>
+                <div class="col-md-6 p-4">
+                  <h1 id="a1">Reservation </h1>
+                    <form action="">
+                        
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <textarea class="form-control" id="address"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="cardnumber" class="form-label">Credit Card Number</label>
+                                    <input type="text" class="form-control" id="cardnumber">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="expiration" class="form-label">Expiration Date</label>
+                                    <input type="text" class="form-control" id="expiration">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="mb-3">
+                                    <label for="cvv" class="form-label">CVV</label>
+                                    <input type="text" class="form-control" id="cvv">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                          <button type="submit" style="background-color: #669DB2;" class="btn btn-primary mt-4"> Reserve</button>
+
+                        </div>
+                    </form>
                 </div>
             </div>
-            {%endfor%}
-        
-      
-  </div>
-  
+        </div>
+    </section>
+    <!-- checkout -->
 
 
+    <!-- footer -->
+    <footer class="bg-dark text-center text-white">
+        <div class="container p-4 pb-0">
+            <section class="mb-4">
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-facebook-f"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-twitter"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-google"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-instagram"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-linkedin-in"></i></a>
+                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                        class="fab fa-github"></i></a>
+            </section>
+        </div>
 
- </body>
+        <div class="text-center p-3" style="background-color: #669DB2;">
+            © 2023 Copyright:
+            <a class="text-white" href="index.html">Travelo</a>
+        </div>
+    </footer>
+    <!-- footer -->
+
+    <!-- bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 
 </html>

@@ -1,1 +1,222 @@
-profile
+
+{% load static %}
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% block content %}
+<style>
+     body {
+        background-image: url(/static/imgs/1.jpg);
+        background-position: center;
+        background-size: cover;
+        
+        font-family: 'Arial', sans-serif;
+    }
+
+    .emp-profile {
+        margin-top: 50px;
+    }
+
+    .profile-head {
+        background-color: #5bc0de;
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+    .profile-head h5 {
+        color: #fff;
+    }
+
+    .profile-head h6 {
+        color: #0a0a0a;
+    }
+
+    .nav-tabs {
+        margin-top: 20px;
+    }
+
+    .profile-tab {
+        border-radius: 5px;
+        background-color: #fff;
+        margin-top: -20px;
+        padding: 20px;
+    }
+
+    .profile-edit-btn {
+        border: none;
+        padding: 10px;
+        
+        font-weight: 600;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .profile-edit-btn:hover {
+        background-color: #5bc0de;
+    }
+
+    .modal-content {
+        border-radius: 10px;
+    }
+
+    .modal-header {
+        background-color: #5bc0de;
+        
+        border-radius: 10px 10px 0 0;
+    }
+
+    .modal-footer {
+        background-color: #f5f5f5;
+    }
+
+    .modal-title {
+        color: #fff;
+    }
+</style>
+
+<div class="container emp-profile">
+  <form method="post">
+      <div class="row">
+          <div class="col-md-4">
+          </div>
+          <div class="col-md-5">
+              <div class="profile-head">
+                  <h2> Welcome {{user.username}}</h2>
+                  <h6>{{user.email}}</h6>
+                 
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                      <li class="nav-item">
+                          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#Informations" role="tab" aria-controls="home" aria-selected="true">Informations</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#Events" role="tab" aria-controls="profile" aria-selected="false">Your saved travels </a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+          <div class="col-md-3">
+              {% csrf_token %}
+              <input type="button" class="profile-edit-btn" style="margin-bottom: 2%" name="btnAddMore" value="Edit Profile" data-toggle="modal" data-target="#updateProfil" />
+    
+              <a href="" class="profile-edit-btn"><input type="button" class="profile-edit-btn"  style="margin-bottom: 0%;padding-left : 5%" name="btnAddMore" value="Show your Event" /></a>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-4">
+              
+          </div>
+          <div class="col-md-8">
+              <div class="tab-content profile-tab" id="myTabContent">
+                  <div class="tab-pane fade show active" id="Informations" role="tabpanel" aria-labelledby="home-tab">
+                      <div class="row">
+                          <div class="col-md-5">
+                              <label>Name</label>
+                          </div>
+                          <div class="col-md-5">
+                              <p>{{user.username}}</p>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-5">
+                              <label>Email</label>
+                          </div>
+                          <div class="col-md-5">
+                              <p>{{user.email}}</p>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-5">
+                              <label>birth_date</label>
+                          </div>
+                          <div class="col-md-5">
+                              <p>{{user.birth_date}}</p>
+                          </div>
+                      </div>
+            
+                    
+                  </div>
+
+
+                  
+                  <div class="tab-pane fade" id="Events" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="row row-cols-auto">
+                        <div class="col">
+                            <p>Title</p>
+                        </div>
+                        <div class="col">
+                          <p>Date</p>
+                        </div>
+                        <div class="col">
+                        <p>Time</p>
+                        </div>
+                        <div class="col">
+                            <p>Location</p>
+                        </div>
+                        <div class="col">
+                        <p>Status</p>
+                        </div>
+                    </div>
+                    
+                  </div>
+              </div>
+          </div>
+      </div>
+  </form>
+</div>
+
+
+  <!-- Modal Update Info -->
+  <div class="modal fade" id="updateProfil" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content" style="margin-top: 20%;">
+        <div class="modal-header">
+          <h3 class="modal-title fs-5">Edit Profile</h3>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="updateprofil"  enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="name" class="col-form-label">First Name:</label>
+              <input type="text" class="form-control" id="name" name="first_name" value="{{ user.username }}">
+            </div>
+            <div class="mb-3">
+              <label for="name" class="col-form-label">Last Name:</label>
+              <input type="text" class="form-control" id="name" name="last_name" value="{{ user.username}}">
+            </div>
+            <div class="mb-3">
+              <label for="email" class="col-form-label">Email:</label>
+              <input type="email" class="form-control" id="email" name="email" value="{{user.email }}" disabled >
+            </div>
+            <div class="mb-3">
+              <label for="phone_number" class="col-form-label">Birth Date:</label>
+              <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ user.birth_date }}">
+            </div>
+            
+           
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+
+  
+
+<!-- Model for Edit Event-->
+
+  <script>
+    function submitForm() {
+      document.getElementById('imageForm').submit();
+    }
+  </script>
+
+{%endblock%}

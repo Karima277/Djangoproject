@@ -13,14 +13,21 @@ from django.views.decorators.csrf import csrf_protect
 from .forms import LoginForm  # Import your LoginForm
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import requires_csrf_token
-
+from django.shortcuts import render, get_object_or_404
+from .models import Travel
 def home(request):
     return render(request, 'myfirstapp/index.html')
 def profile(request):
     return render(request,'myfirstapp/profile.html')
 def signup(request):
     return render(request, 'myfirstapp/signup.html')
+def cart(request):
+    return render(request, 'myfirstapp/cart.html')
 
+
+def travel_details(request, travel_id):
+    travel = get_object_or_404(Travel, id=travel_id)
+    return render(request, 'myfirstapp/details.html', {'travel': travel})
 # def login(request):
 #     return render(request, 'myfirstapp/login.html')
 def travels(request):
