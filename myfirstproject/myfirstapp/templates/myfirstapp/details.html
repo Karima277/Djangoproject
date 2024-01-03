@@ -2088,7 +2088,7 @@ body{
                 <div class="col-md-6 p-4">
                   <h1 id="a1">Reservation </h1>
                     <!-- details.html -->
-<form method="post" action="{% url 'reserve' %}">
+<form method="post" action="{% url 'reserve' travel.id %}">
   {% csrf_token %}
   <div class="mb-3">
       <label for="name" class="form-label">Name</label>

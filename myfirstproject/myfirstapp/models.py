@@ -50,6 +50,7 @@ from django.contrib.auth.models import User
 
 class Reservation(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    travel = models.ForeignKey(Travel, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     email = models.EmailField()
     address = models.TextField()

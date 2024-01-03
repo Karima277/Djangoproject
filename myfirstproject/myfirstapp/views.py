@@ -35,7 +35,8 @@ def travels(request):
     context={'Travels': Travel.objects.all()}
     return render(request, 'myfirstapp/travels.html',context)
 # views.py
-
+def Reservation(request):
+    return render(request, 'myfirstapp/Reservation.html')
 
 
 def search_results(request):
@@ -121,9 +122,14 @@ def logout_view(request):
 from django.shortcuts import render, redirect
 from .models import Reservation
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from .models import Reservation, Travel
 
 @login_required
-def reserve(request):
+def reserve(request, travel_id):
+    # Retrieve the Travel object
+    travel = get_object_or_404(Travel, id=travel_id)
+
     if request.method == 'POST':
         # Retrieve form data from the POST request
         name = request.POST.get('name')
@@ -136,6 +142,7 @@ def reserve(request):
         # Create a reservation object and save it to the database
         reservation = Reservation(
             user=request.user,
+            travel=travel,  # Associate the Travel with the Reservation
             name=name,
             email=email,
             address=address,
@@ -148,4 +155,73 @@ def reserve(request):
         # You can add additional logic or redirect the user to a success page
         return redirect('success_page')
 
-    return render(request, 'your_template.html')
+    return render(request, 'your_template.html', {'travel': travel})
+
+
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib import messages
+
+@login_required(login_url="/login")
+def updateprofil(request):
+    if request.method == 'POST':
+        user = request.user
+        firstname = request.POST.get('first_name')
+        lastname = request.POST.get('last_name')
+        birth_date = request.POST.get('birth_date')
+
+        user.first_name = firstname
+        user.last_name = lastname
+        user.birth_date = birth_date
+
+        user.save()
+
+        messages.success(request, 'Profile updated successfully.')
+        return redirect("profile")
+
+    return render(request, 'update_profile.html')
+
+
+@login_required(login_url="/login")
+def reserved_travels(request):
+    # Get travels that the user has reserved
+    reserved_travels = Travel.objects.filter(reservation__user=request.user)
+
+    context = {
+        'reserved_travels': reserved_travels,
+    }
+
+    return render(request, 'myfirstapp/Reservation.html', context)
+
+from django.shortcuts import get_object_or_404, redirect
+from .models import Reservation
+
+def cancel_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+
+    # Check if the user making the request is the owner of the reservation
+    if request.user == reservation.user:
+        reservation.delete()
+        # You can add a success message or perform other actions here
+    else:
+        # Redirect or handle unauthorized cancellation attempts
+        pass
+
+    # Redirect to a success page or any other desired page
+    return redirect('reserved_travels')
+from django.shortcuts import render
+from .models import Travel
+
+def administrator_dashboard(request):
+    # Get the last 3 travels
+    last_three_travels = Travel.objects.order_by('-id')[:3]
+
+    context = {
+        'last_three_travels': last_three_travels,
+    }
+
+    return render(request, 'administrateur.html', context)
+
+from django.contrib.auth.views import LoginView
+from django.shortcuts import redirect
+

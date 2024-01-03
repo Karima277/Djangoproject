@@ -77,7 +77,39 @@
         color: #fff;
     }
 </style>
-
+<body class="font-primary">
+    <main class="w-full">
+    <section class="w-full h-[100vh]  bg-header  bg-cover bg-no-repeat bg-center bg-color1 bg-blend-multiply bg-opacity-60 " >
+        <section class="w-full flex flex-wrap justify-center ">
+<header 
+            class="w-[85%]  xl:w-[73%]  container hidden lg:flex justify-between h-[60px]  items-center py-[45px] border-b-[1px] border-white border-opacity-40">
+            <figure class="w-[140px]">
+               <img src="{% static 'imgs/logo-light.png' %}" alt="" class="w-[100%]">
+            </figure>
+            <nav class="h-[100%] md:w-[70%]">
+                <ul class="h-[100%] flex items-center gap-8 justify-end">
+                    <li class="list-none  "><a class="decoration-none text-white hover:text-color3 transition-all duration-500"
+                            href="{% url 'home_page' %}">Home</a></li>
+                    <li class="list-none"><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                            href="{% url 'travels' %}">Tours</a></li>
+                    {% if user.is_superuser %}
+                    <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                      href="{% url 'admin:index' %}">Admin</a></li>
+                    <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                      href="{% url 'logout_view' %}">Log out</a></li>
+                    {% elif user.is_authenticated %}
+                    <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                      href="{% url 'profile' %}">Profile</a></li>
+                    <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                      href="{% url 'logout_view' %}">Log out</a></li>
+                    {% else %}
+                    <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                            href="{% url 'login_view' %}">Log In</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+        </section></section></main>
 <div class="container emp-profile">
   <form method="post">
       <div class="row">
@@ -85,7 +117,7 @@
           </div>
           <div class="col-md-5">
               <div class="profile-head">
-                  <h2> Welcome {{user.username}}</h2>
+                  <h2> Welcome {{user.first_name }}  {{user.last_name}}</h2>
                   <h6>{{user.email}}</h6>
                  
                   <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -102,7 +134,10 @@
               {% csrf_token %}
               <input type="button" class="profile-edit-btn" style="margin-bottom: 2%" name="btnAddMore" value="Edit Profile" data-toggle="modal" data-target="#updateProfil" />
     
-              <a href="" class="profile-edit-btn"><input type="button" class="profile-edit-btn"  style="margin-bottom: 0%;padding-left : 5%" name="btnAddMore" value="Show your Event" /></a>
+              <a href="{% url 'reserved_travels' %}" class="profile-edit-btn">
+                <input type="button" class="profile-edit-btn" style="margin-bottom: 0%; padding-left: 5%" name="btnAddMore" value="Show your reservations">
+            </a>
+            
           </div>
       </div>
       <div class="row">
@@ -144,24 +179,31 @@
                   
                   <div class="tab-pane fade" id="Events" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="row row-cols-auto">
-                        <div class="col">
-                            <p>Title</p>
-                        </div>
-                        <div class="col">
-                          <p>Date</p>
-                        </div>
-                        <div class="col">
-                        <p>Time</p>
-                        </div>
-                        <div class="col">
-                            <p>Location</p>
-                        </div>
-                        <div class="col">
-                        <p>Status</p>
-                        </div>
+                        {% for reservation in reservations %}
+                            <div class="col">
+                                <p>Title</p>
+                            </div>
+                            <div class="col">
+                                <p>Date</p>
+                                <p>{{ reservation.name }}</p>
+                            </div>
+                            <div class="col">
+                                <p>Time</p>
+                                <p>{{ reservation.created_at.date }}</p>
+                            </div>
+                            <div class="col">
+                                <p>Location</p>
+                                <p>{{ reservation.address }}</p>
+                            </div>
+                            <div class="col">
+                                <p>Status</p>
+                                <p>{{ reservation.created_at.time }}</p>
+                            </div>
+                        {% endfor %}
                     </div>
-                    
-                  </div>
+                </div>
+                
+
               </div>
           </div>
       </div>
@@ -179,15 +221,15 @@
           <h3 class="modal-title fs-5">Edit Profile</h3>
         </div>
         <div class="modal-body">
-          <form method="POST" action="updateprofil"  enctype="multipart/form-data">
+          <form method="POST" action="{% url 'updateprofil' %}" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3">
               <label for="name" class="col-form-label">First Name:</label>
-              <input type="text" class="form-control" id="name" name="first_name" value="{{ user.username }}">
+              <input type="text" class="form-control" id="name" name="first_name" value="{{ user.first_name }}">
             </div>
             <div class="mb-3">
               <label for="name" class="col-form-label">Last Name:</label>
-              <input type="text" class="form-control" id="name" name="last_name" value="{{ user.username}}">
+              <input type="text" class="form-control" id="name" name="last_name" value="{{ user.last_name}}">
             </div>
             <div class="mb-3">
               <label for="email" class="col-form-label">Email:</label>
