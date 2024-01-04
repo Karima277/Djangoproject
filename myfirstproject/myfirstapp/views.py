@@ -15,6 +15,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import requires_csrf_token
 from django.shortcuts import render, get_object_or_404
 from .models import Travel
+from django.views.decorators.http import require_POST
 def home(request):
     return render(request, 'myfirstapp/index.html')
 def profile(request):
@@ -242,3 +243,27 @@ def delete_user(request, user_id):
     user = get_object_or_404(CustomUser, pk=user_id)
     user.delete()
     return JsonResponse({'message': 'User deleted successfully'})
+
+# views.py
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import Travel
+
+@login_required
+def list_travels(request):
+    travels = Travel.objects.all()
+    username = request.user.username
+    context = {
+        'username': username,
+        'travel_list': travels,
+         
+        }
+    return render(request, 'myfirstapp/List_travels.html', context)
+
+def delete_travel(request, travel_id):
+    travel = get_object_or_404(Travel, id=travel_id)
+    travel.delete()
+    return JsonResponse({'message': 'Travel deleted successfully'})
+
