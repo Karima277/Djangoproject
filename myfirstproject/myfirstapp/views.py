@@ -227,3 +227,14 @@ def administrator_dashboard(request):
 
     return render(request, 'myfirstapp/administrateur.html', context)
 
+
+
+def client_list(request):
+    users = get_user_model().objects.filter(is_superuser=False)
+    username = request.user.username
+    context = {
+        'username': username,
+        'user_list':users,
+     }
+    return render(request, 'myfirstapp/Clients.html', context )
+
