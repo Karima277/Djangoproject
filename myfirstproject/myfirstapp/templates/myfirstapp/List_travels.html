@@ -4,6 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Travels admin</title>
+    <!-- Add these links in your HTML head section -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
     <!-- Montserrat Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -240,6 +245,9 @@
 .card {
    width: 18rem; /* Adjust the width as needed*/
 }
+label {
+        color: black;
+    }
 
     </style>
   </head>
@@ -309,21 +317,61 @@
 <main class="main-container">
     <div class="main-title">
         <h2>Travel List</h2>
-    </div>
-    <div>
-        <button class="btn btn-primary" onclick="toggleForm('addTravelForm{{ travel.id }}')">Add Travel</button>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#addTravelModal{{ travel.id }}">Add Travel</button>
+        <div class="modal fade" id="addTravelModal{{ travel.id }}" tabindex="-1" role="dialog" aria-labelledby="addTravelModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addTravelModalLabel">Add Travel</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Your form content goes here -->
+                        <form method="post" action="" id="addTravelForm{{ travel.id }}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="city" class="form-label">City</label>
+                                <input type="text" class="form-control" id="city" name="city" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="destination" class="form-label">Destination</label>
+                                <input type="text" class="form-control" id="destination" name="destination" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="duration_days" class="form-label">Duration </label>
+                                <input type="text" class="form-control" id="duration_days"name="duration_days" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Price</label>
+                                <input type="text" class="form-control" id="price" name="price" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Image URL</label>
+                                <input type="file" class="form-control" id="image" name="image" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Travel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="travel-list">
         {% for travel in travel_list %}
         <div class="card mb-3" style="max-width: 18rem;">
-            <img src="{{ travel.image.url }}" class="card-img-top" alt="Travel Image" style="height: 200px; object-fit: cover;">
+            <img src="{{ travel.image.url}}" class="card-img-top" alt="Travel Image" style="height: 200px; object-fit: cover;">
             <div class="card-body">
                 <h5 class="card-title">{{ travel.city }}</h5>
                 <p class="card-text">{{ travel.destination }}</p>
                 <button class="btn btn-danger" onclick="deleteTravel({{ travel.id }})">Delete</button>
+               
+
+                <!-- Add the modal here -->
+               
             </div>
-            
         </div>
         {% endfor %}
     </div>
