@@ -7,12 +7,11 @@
 
     <!-- Montserrat Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
+    
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/styles.css">
     <style>
       body {
   margin: 0;
@@ -97,7 +96,9 @@
   background-color: rgba(255, 255, 255, 0.2);
   cursor: pointer;
 }
-
+#aa{
+    background-color: rgba(255, 255, 255, 0.2);
+}
 .sidebar-list-item > a {
   text-decoration: none;
   color: #9e9ea4;
@@ -240,6 +241,7 @@
   .hedaer-left {
     display: none;
   }
+  
 }
     </style>
   </head>
@@ -254,7 +256,7 @@
         
         <div class="header-right">
           <span class="material-icons-outlined">account_circle</span>
-          <span >account_circle</span>
+          <span >{{ username }}</span>
 
         </div>
       </header>
@@ -270,7 +272,7 @@
         </div>
 
         <ul class="sidebar-list">
-          <li class="sidebar-list-item">
+          <li class="sidebar-list-item" id="aa">
             <a href="#" target="_blank">
               <span class="material-icons-outlined">dashboard</span> Dashboard
             </a>
@@ -289,14 +291,14 @@
           
           <li class="sidebar-list-item">
             <a href="#" target="_blank">
-              <span class="material-icons-outlined">poll</span> Go home
+                <span class="material-icons-outlined">home</span> Go home
             </a>
-          </li>
-          <li class="sidebar-list-item">
+        </li>
+        <li class="sidebar-list-item">
             <a href="#" target="_blank">
-              <span class="material-icons-outlined">settings</span> LogOut
+                <span class="material-icons-outlined">exit_to_app</span> LogOut
             </a>
-          </li>
+        </li>
         </ul>
       </aside>
       <!-- End Sidebar -->
@@ -314,7 +316,7 @@
               <h3>Travels</h3>
               <span class="material-icons-outlined">inventory_2</span>
             </div>
-            <h1>249</h1>
+            <h1>{{ num_travels }}</h1>
           </div>
 
 
@@ -323,7 +325,7 @@
               <h3>Clients</h3>
               <span class="material-icons-outlined">groups</span>
             </div>
-            <h1>1500</h1>
+            <h1>{{ num_users }}</h1>
           </div>
 
        
@@ -355,24 +357,31 @@
                 </tbody>
             </table>
         </div>
-        
-        <div class="charts-card">
-          <h2 class="chart-title">Last 3 travels</h2>
+   <div class="charts-card">
+          <h2 class="chart-title">Admins</h2>
           <div class="row">
-              {% for travel in last_three_travels %}
-                  <div class="col-md-4">
-                      <div class="card mb-4 box-shadow">
-                          <img class="card-img-top" src="{{ travel.image.url }}" alt="Travel Image">
-                          <div class="card-body">
-                              <h6 class="card-title">{{ travel.city }}</h6>
-                              <p class="card-text">{{ travel.destination }}</p>
-                              <!-- Add more details if needed -->
-                          </div>
-                      </div>
-                  </div>
-              {% endfor %}
+            <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <!-- Add more columns if needed -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for admin in all_admins %}
+                    <tr>
+                        <td>{{ admin.id }}</td>
+                        <td>{{ admin.username }}</td>
+                        <td>{{ admin.email }}</td>
+                        <!-- Add more columns if needed -->
+                    </tr>
+                {% endfor %}
+            </tbody></table>
+            
           </div>
-      </div>
+      </div> 
       
 
         </div>

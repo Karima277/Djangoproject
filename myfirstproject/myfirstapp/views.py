@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Travel
+from .models import Travel,CustomUser
 from django.db.models import Q
 from .models import Promotion
 from django.shortcuts import redirect
@@ -209,19 +209,21 @@ def cancel_reservation(request, reservation_id):
 
     # Redirect to a success page or any other desired page
     return redirect('reserved_travels')
-from django.shortcuts import render
-from .models import Travel
-
+from django.contrib.auth import get_user_model
 def administrator_dashboard(request):
-    # Get the last 3 travels
-    last_three_travels = Travel.objects.order_by('-id')[:3]
-
+    username = request.user.username
+    #last_five_users = CustomUser.objects.all().order_by('-id')[:5]
+    last_five_users = get_user_model().objects.filter(is_superuser=False)[:5]
+    all_admins = get_user_model().objects.filter(is_superuser=True)
+    num_travels = Travel.objects.count()
+    num_users = get_user_model().objects.filter(is_superuser=False).count()
     context = {
-        'last_three_travels': last_three_travels,
+        'last_five_users': last_five_users,
+        'all_admins': all_admins,
+        'num_travels': num_travels,
+        'num_users': num_users,
+        'username': username,
     }
 
-    return render(request, 'administrateur.html', context)
-
-from django.contrib.auth.views import LoginView
-from django.shortcuts import redirect
+    return render(request, 'myfirstapp/administrateur.html', context)
 

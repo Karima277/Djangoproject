@@ -1793,7 +1793,7 @@ video {
                             href="{% url 'travels' %}">Tours</a></li>
                     {% if user.is_superuser %}
                     <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                      href="{% url 'admin:index' %}">Admin</a></li>
+                      href="{% url 'administrator_dashboard' %}">Admin</a></li>
                     <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
                       href="{% url 'logout_view' %}">Log out</a></li>
                     {% elif user.is_authenticated %}
