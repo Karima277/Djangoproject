@@ -7,7 +7,8 @@ class CustomUser(AbstractUser):
     password = models.CharField(max_length=128)  # Use a more secure method for storing passwords
     
     birth_date = models.DateField(null=True, blank=True)
-   
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
     # Add related_name to avoid clashes with auth.User
     groups = models.ManyToManyField(
         "auth.Group",

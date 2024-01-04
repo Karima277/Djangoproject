@@ -179,7 +179,7 @@ def updateprofil(request):
         messages.success(request, 'Profile updated successfully.')
         return redirect("profile")
 
-    return render(request, 'update_profile.html')
+    return render(request, 'profile.html')
 
 
 @login_required(login_url="/login")
@@ -237,4 +237,8 @@ def client_list(request):
         'user_list':users,
      }
     return render(request, 'myfirstapp/Clients.html', context )
-
+from django.http import JsonResponse
+def delete_user(request, user_id):
+    user = get_object_or_404(CustomUser, pk=user_id)
+    user.delete()
+    return JsonResponse({'message': 'User deleted successfully'})

@@ -8,7 +8,7 @@ from django.urls import path
 from . import views
 from django.urls import path
 from .views import administrator_dashboard
-from .views import client_list
+from .views import client_list,delete_user
 urlpatterns = [
     
     path('updateprofil/', updateprofil, name='updateprofil'),
@@ -34,6 +34,7 @@ urlpatterns = [
     path('cancel_reservation/<int:reservation_id>/', cancel_reservation, name='cancel_reservation'),
     path('administrator/', administrator_dashboard, name='administrator_dashboard'),
     path('clients/', client_list, name='client_list'),
+    path('delete_user/<int:user_id>/', delete_user, name='delete_user'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
