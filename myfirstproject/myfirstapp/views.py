@@ -16,6 +16,9 @@ from django.views.decorators.csrf import requires_csrf_token
 from django.shortcuts import render, get_object_or_404
 from .models import Travel
 from django.views.decorators.http import require_POST
+from django.shortcuts import render, redirect
+from .forms import PromotionForm
+
 def home(request):
     return render(request, 'myfirstapp/index.html')
 def profile(request):
@@ -267,3 +270,27 @@ def delete_travel(request, travel_id):
     travel.delete()
     return JsonResponse({'message': 'Travel deleted successfully'})
 
+
+def add_promotion(request):
+    context = {}
+    
+
+    if request.method == 'POST':
+        form = PromotionForm(request.POST)
+        if form.is_valid():
+            # Save the promotion first
+            promotion = form.save()
+
+            # Get the selected travel
+            selected_travel = form.cleaned_data['travel']
+
+            # Associate the promotion with the selected travel
+            selected_travel.promotion = promotion
+            selected_travel.save()
+
+            return redirect('add_promotion')  # Redirect to a view displaying the list of promotions
+
+    else:
+        form = PromotionForm()
+    context['username'] = request.user.username
+    return render(request, 'myfirstapp/promotions.html',  {'form': form, **context})

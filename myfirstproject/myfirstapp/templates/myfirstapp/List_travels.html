@@ -97,7 +97,9 @@
   padding: 20px 20px 20px 20px;
   font-size: 18px;
 }
-
+#aa{
+  background-color: rgba(255, 255, 255, 0.2);
+}
 .sidebar-list-item:hover {
   background-color: rgba(255, 255, 255, 0.2);
   cursor: pointer;
@@ -279,13 +281,19 @@ label {
 
         <ul class="sidebar-list">
           <li class="sidebar-list-item">
-            <a href="{%url 'administrator_dashboard'}" target="_blank">
+            <a href="{% url 'administrator_dashboard' %}" target="_blank">
               <span class="material-icons-outlined">dashboard</span> Dashboard
             </a>
           </li>
-          <li class="sidebar-list-item">
+          <li class="sidebar-list-item" id="aa">
             <a href="{% url 'list_travels'%}" target="_blank">
-              <span class="material-icons-outlined">inventory_2</span> Travels
+                <span class="material-icons-outlined">card_travel</span> Travels
+            </a>
+          </li>
+        
+          <li class="sidebar-list-item">
+            <a href="{% url 'add_promotion' %}" target="_blank">
+                <span class="material-icons-outlined">local_offer</span> Promotions
             </a>
           </li>
           

@@ -10,7 +10,7 @@ from django.urls import path
 from .views import administrator_dashboard
 from .views import client_list,delete_user
 from .views import list_travels, delete_travel
-
+from .views import add_promotion
 urlpatterns = [
     
     path('updateprofil/', updateprofil, name='updateprofil'),
@@ -39,7 +39,9 @@ urlpatterns = [
     path('delete_user/<int:user_id>/', delete_user, name='delete_user'),
     path('list_travels/',list_travels, name='list_travels'),
     path('delete_travel/<int:travel_id>/', views.delete_travel, name='delete_travel'),
-  
+    path('clients/', client_list, name='client_list'),
+    path('add_promotion/', add_promotion, name='add_promotion'),
+    
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

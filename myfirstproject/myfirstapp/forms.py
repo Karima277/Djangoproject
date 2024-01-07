@@ -34,4 +34,14 @@ class LoginForm(AuthenticationForm):
             'username': forms.TextInput(attrs={'placeholder': 'Enter your email'}),
             'password': forms.PasswordInput(attrs={'placeholder': 'Enter your password'}),
         }
-# forms.py
+
+from django import forms
+from .models import Promotion, Travel
+
+class PromotionForm(forms.ModelForm):
+    travel = forms.ModelChoiceField(queryset=Travel.objects.all(), label='Select Travel')
+
+    class Meta:
+        model = Promotion
+        fields = ['name', 'discount_percentage', 'start_date', 'end_date', 'travel']
+
