@@ -279,29 +279,29 @@ label {
 
         <ul class="sidebar-list">
           <li class="sidebar-list-item">
-            <a href="#" target="_blank">
+            <a href="{%url 'administrator_dashboard'}" target="_blank">
               <span class="material-icons-outlined">dashboard</span> Dashboard
             </a>
           </li>
           <li class="sidebar-list-item">
-            <a href="#" target="_blank">
+            <a href="{% url 'list_travels'%}" target="_blank">
               <span class="material-icons-outlined">inventory_2</span> Travels
             </a>
           </li>
           
           <li class="sidebar-list-item">
-            <a href="#" target="_blank">
+            <a href="{% url 'client_list' %}" target="_blank">
               <span class="material-icons-outlined">groups</span> Customers
             </a>
           </li>
           
           <li class="sidebar-list-item">
-            <a href="#" target="_blank">
+            <a href="{% url 'home_page' %}" target="_blank">
               <span class="material-icons-outlined">poll</span> Go home
             </a>
           </li>
           <li class="sidebar-list-item">
-            <a href="#" target="_blank">
+            <a href="{% url 'logout_view' %}" target="_blank">
               <span class="material-icons-outlined">settings</span> LogOut
             </a>
           </li>

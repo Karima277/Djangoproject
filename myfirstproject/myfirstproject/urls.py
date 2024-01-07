@@ -29,5 +29,7 @@ urlpatterns = [
     path('login/', include('myfirstapp.urls')),
     path('profile/', include('myfirstapp.urls')),
     path('logout/', include('myfirstapp.urls')),
+    path('clients//', include('myfirstapp.urls')),
+    path('list_travels/', include('myfirstapp.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
