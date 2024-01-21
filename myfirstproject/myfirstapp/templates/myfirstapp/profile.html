@@ -1,280 +1,155 @@
-
 {% load static %}
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 
 <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="{% static 'css/profile.css' %}" rel="stylesheet">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-{% block content %}
-<style>
-     body {
-        background-image: url(/static/imgs/1.jpg);
-        background-position: center;
-        background-size: cover;
-        
-        font-family: 'Arial', sans-serif;
-    }
 
-    .emp-profile {
-        margin-top: 50px;
-    }
-
-    .profile-head {
-        background-color: #5bc0de;
-        padding: 20px;
-        text-align: center;
-        border-radius: 10px;
-    }
-
-    .profile-head h5 {
-        color: #fff;
-    }
-
-    .profile-head h6 {
-        color: #0a0a0a;
-    }
-
-    .nav-tabs {
-        margin-top: 20px;
-    }
-
-    .profile-tab {
-        border-radius: 5px;
-        background-color: #fff;
-        margin-top: -20px;
-        padding: 20px;
-    }
-
-    .profile-edit-btn {
-        border: none;
-        padding: 10px;
-        
-        font-weight: 600;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .profile-edit-btn:hover {
-        background-color: #5bc0de;
-    }
-
-    .modal-content {
-        border-radius: 10px;
-    }
-
-    .modal-header {
-        background-color: #5bc0de;
-        
-        border-radius: 10px 10px 0 0;
-    }
-
-    .modal-footer {
-        background-color: #f5f5f5;
-    }
-
-    .modal-title {
-        color: #fff;
-    }
-</style>
 <body class="font-primary">
-    <main class="w-full">
-    <section class="w-full h-[100vh]  bg-header  bg-cover bg-no-repeat bg-center bg-color1 bg-blend-multiply bg-opacity-60 " >
-        <section class="w-full flex flex-wrap justify-center ">
-<header 
-            class="w-[85%]  xl:w-[73%]  container hidden lg:flex justify-between h-[60px]  items-center py-[45px] border-b-[1px] border-white border-opacity-40">
-            <figure class="w-[140px]">
-               <img src="{% static 'imgs/logo-light.png' %}" alt="" class="w-[100%]">
-            </figure>
-            <nav class="h-[100%] md:w-[70%]">
-                <ul class="h-[100%] flex items-center gap-8 justify-end">
-                    <li class="list-none  "><a class="decoration-none text-white hover:text-color3 transition-all duration-500"
-                            href="{% url 'home_page' %}">Home</a></li>
-                    <li class="list-none"><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                            href="{% url 'travels' %}">Tours</a></li>
-                    {% if user.is_superuser %}
-                    <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                      href="{% url 'admin:index' %}">Admin</a></li>
-                    <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                      href="{% url 'logout_view' %}">Log out</a></li>
-                    {% elif user.is_authenticated %}
-                    <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                      href="{% url 'profile' %}">Profile</a></li>
-                    <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                      href="{% url 'logout_view' %}">Log out</a></li>
-                    {% else %}
-                    <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                            href="{% url 'login_view' %}">Log In</a></li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </header>
-        </section></section></main>
-<div class="container emp-profile">
-  <form method="post">
-      <div class="row">
-          <div class="col-md-4">
-          </div>
-          <div class="col-md-5">
-              <div class="profile-head">
-                  <h2> Welcome {{user.first_name }}  {{user.last_name}}</h2>
-                  <h6>{{user.email}}</h6>
-                 
-                  <ul class="nav nav-tabs" id="myTab" role="tablist">
-                      <li class="nav-item">
-                          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#Informations" role="tab" aria-controls="home" aria-selected="true">Informations</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#Events" role="tab" aria-controls="profile" aria-selected="false">Your saved travels </a>
-                      </li>
-                  </ul>
-              </div>
-          </div>
-          <div class="col-md-3">
-              {% csrf_token %}
-              <input type="button" class="profile-edit-btn" style="margin-bottom: 2%" name="btnAddMore" value="Edit Profile" data-toggle="modal" data-target="#updateProfil" />
-    
-              <a href="{% url 'reserved_travels' %}" class="profile-edit-btn">
-                <input type="button" class="profile-edit-btn" style="margin-bottom: 0%; padding-left: 5%" name="btnAddMore" value="Show your reservations">
-            </a>
-            
-          </div>
-      </div>
-      <div class="row">
-          <div class="col-md-4">
-              
-          </div>
-          <div class="col-md-8">
-              <div class="tab-content profile-tab" id="myTabContent">
-                  <div class="tab-pane fade show active" id="Informations" role="tabpanel" aria-labelledby="home-tab">
-                      <div class="row">
-                          <div class="col-md-5">
-                              <label> First Name</label>
-                          </div>
-                          <div class="col-md-5">
-                              <p>{{user.first_name}}</p>
-                          </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-5">
-                            <label> Last Name</label>
-                        </div>
-                        <div class="col-md-5">
-                            <p>{{user.last_name}}</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-5">
-                            <label> User Name</label>
-                        </div>
-                        <div class="col-md-5">
-                            <p>{{user.username}}</p>
-                        </div>
-                    </div>
-                      <div class="row">
-                          <div class="col-md-5">
-                              <label>Email</label>
-                          </div>
-                          <div class="col-md-5">
-                              <p>{{user.email}}</p>
-                          </div>
-                      </div>
-                      <div class="row">
-                          <div class="col-md-5">
-                              <label>birth_date</label>
-                          </div>
-                          <div class="col-md-5">
-                              <p>{{user.birth_date}}</p>
-                          </div>
-                      </div>
-            
-                    
-                  </div>
+    <header
+        class="w-[85%]  xl:w-[73%]  container hidden lg:flex justify-between h-[60px]  items-center py-[45px] border-b-[1px] border-white border-opacity-40">
+        <figure class="w-[140px]">
+            <img src="{% static 'imgs/logo-light.png' %}" alt="" class="w-[100%]">
+        </figure>
+        <nav class="h-[100%] md:w-[70%]">
+            <ul class="h-[100%] flex items-center gap-8 justify-end">
+                <li class="list-none  "><a
+                        class="decoration-none text-white hover:text-color3 transition-all duration-500"
+                        href="{% url 'home_page' %}">Home</a></li>
+                <li class="list-none"><a
+                        class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                        href="{% url 'travels' %}">Tours</a></li>
+                {% if user.is_superuser %}
+                <li class="list-none "><a
+                        class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                        href="{% url 'administrator_dashboard' %}">Admin</a></li>
+                <li class="list-none "><a
+                        class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                        href="{% url 'logout_view' %}">Log out</a></li>
+                {% elif user.is_authenticated %}
+                <li class="list-none "><a
+                        class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                        href="{% url 'profile' %}">Profile</a></li>
+                <li class="list-none "><a
+                        class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                        href="{% url 'logout_view' %}">Log out</a></li>
+                {% else %}
+                <li class="list-none "><a
+                        class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                        href="{% url 'login_view' %}">Log In</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
 
+    <!-- header for mobile -->
+    <header
+        class="w-[95%] sm:w-[70%] md:w-[80%] container flex h-[60px] justify-between  items-center  lg:hidden  py-[45px] relative border-b-[1px] border-white border-opacity-40 ">
+        <figure class="w-[140px]">
+            <img src="{% static 'imgs/logo-light.png' %}
+" alt="" class="w-[100%]">
+        </figure>
+        <div class=" w-1/2 h-full flex justify-end items-center ">
+            <i class="bi bi-list text-3xl text-white cursor-pointer ham-menu-icon"></i>
+        </div>
+        <nav class="menu hidden h-[400px] w-full absolute bg-white left-0 top-[90px]   z-30 ">
+            <ul class="h-full w-full flex flex-col  justify-center ms-6">
+                <li class="list-none my-3"><a
+                        class="decoration-none text-color2 flex hover:text-color4  transition-all duration-600"
+                        href="">Home</a></li>
+                <li class="list-none my-3"><a
+                        class="decoration-none text-color2 flex  hover:text-color4  transition-all duration-600"
+                        href="{% url 'travels' %}">Tours</a></li>
+                <li class="list-none my-3"><a
+                        class="decoration-none text-color2 flex  hover:text-color4 transition-all duration-600"
+                        href="{% url 'login_view' %}">Log In</a></li>
 
-                  
-                  <div class="tab-pane fade" id="Events" role="tabpanel" aria-labelledby="profile-tab">
-                    <div class="row row-cols-auto">
-                        {% for reservation in reservations %}
-                            <div class="col">
-                                <p>Title</p>
+            </ul>
+        </nav>
+    </header>
+    <!-- end header mobile  -->
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3">
+                    <div class="profile-sidebar">
+                        <!-- SIDEBAR USERPIC -->
+                        <div class="profile-userpic">
+                            <img src="{% static '/imgs/1.jpg' %}" class="img-responsive" alt="">
+                        </div>
+                        <!-- END SIDEBAR USERPIC -->
+                        <!-- SIDEBAR USER TITLE -->
+                        <div class="profile-usertitle">
+                            <div class="profile-usertitle-name">
+                                {{ user.username }}
                             </div>
-                            <div class="col">
-                                <p>Date</p>
-                                <p>{{ reservation.name }}</p>
+                            <div class="profile-usertitle-job">
+                                {{ user.email }}
                             </div>
-                            <div class="col">
-                                <p>Time</p>
-                                <p>{{ reservation.created_at.date }}</p>
-                            </div>
-                            <div class="col">
-                                <p>Location</p>
-                                <p>{{ reservation.address }}</p>
-                            </div>
-                            <div class="col">
-                                <p>Status</p>
-                                <p>{{ reservation.created_at.time }}</p>
-                            </div>
-                        {% endfor %}
+                        </div>
+                        <!-- END SIDEBAR USER TITLE -->
+                        <!-- SIDEBAR BUTTONS -->
+                        <div class="profile-userbuttons">
+                            <button type="button" class="btn btn-success btn-sm">Follow</button>
+                            <button type="button" class="btn btn-danger btn-sm">Message</button>
+                        </div>
+                        <!-- END SIDEBAR BUTTONS -->
+                        <!-- SIDEBAR MENU -->
+                        <div class="profile-usermenu">
+                            <ul class="nav">
+                                <li class="active">
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-home"></i>
+                                        Overview </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                        Mes voiyages </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- END MENU -->
                     </div>
                 </div>
-                
+                <div class="col-md-9">
+                    <div class="profile-content">
+                        <!-- user info -->
+                        <!-- User info -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">User info</h4>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table profile__table">
+                                    <tbody>
+                                        <tr>
+                                            <th><strong>Username</strong></th>
+                                            <td>{{ user.username }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th><strong>Full name</strong></th>
+                                            <td>{{ user.first_name }} {{ user.last_name }}</td>
+                                        <tr>
+                                            <th><strong>Email</strong></th>
+                                            <td>{{ user.email }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th><strong>Birthday</strong></th>
+                                            <td>{{ user.birth_date }}</td>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
 
-              </div>
-          </div>
-      </div>
-  </form>
-</div>
 
-
-  <!-- Modal Update Info -->
-  <div class="modal fade" id="updateProfil" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content" style="margin-top: 20%;">
-        <div class="modal-header">
-          <h3 class="modal-title fs-5">Edit Profile</h3>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <form method="POST" action="{% url 'updateprofil' %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="mb-3">
-              <label for="name" class="col-form-label">First Name:</label>
-              <input type="text" class="form-control" id="name" name="first_name" value="{{ user.first_name }}">
-            </div>
-            <div class="mb-3">
-              <label for="name" class="col-form-label">Last Name:</label>
-              <input type="text" class="form-control" id="name" name="last_name" value="{{ user.last_name}}">
-            </div>
-            <div class="mb-3">
-              <label for="email" class="col-form-label">Email:</label>
-              <input type="email" class="form-control" id="email" name="email" value="{{user.email }}" disabled >
-            </div>
-            <div class="mb-3">
-              <label for="phone_number" class="col-form-label">Birth Date:</label>
-              <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ user.birth_date }}">
-            </div>
-            
-           
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
- 
-
-  
-
-<!-- Model for Edit Event-->
-
-  <script>
-    function submitForm() {
-      document.getElementById('imageForm').submit();
-    }
-  </script>
-
-{%endblock%}
+</body>

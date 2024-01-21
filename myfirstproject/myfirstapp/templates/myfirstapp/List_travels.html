@@ -1,462 +1,234 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Travels admin</title>
-    <!-- Add these links in your HTML head section -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-    <!-- Montserrat Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Travels admin</title>
+  <!-- Add these links in your HTML head section -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-    <!-- Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <!-- Montserrat Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
 
-    <!-- Custom CSS -->
-    
-    <style>
-      body {
-  margin: 0;
-  padding: 0;
-  background-color: #1d2634;
-  color: #9e9ea4;
-  font-family: 'Montserrat', sans-serif;
-}
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/list_travels.css' %}">
+</head>
 
-.material-icons-outlined {
-  vertical-align: middle;
-  line-height: 1px;
-  font-size: 35px;
-}
+<body>
+  <div class="grid-container">
 
-.grid-container {
-  display: grid;
-  grid-template-columns: 260px 1fr 1fr 1fr;
-  grid-template-rows: 0.2fr 3fr;
-  grid-template-areas:
-    'sidebar header header header'
-    'sidebar main main main';
-  height: 100vh;
-}
+    <!-- Header -->
+    <header class="header">
+      <div class="menu-icon" onclick="openSidebar()">
+        <span class="material-icons-outlined">menu</span>
+      </div>
 
-/* ---------- HEADER ---------- */
-.header {
-  grid-area: header;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 30px 0 30px;
-  box-shadow: 0 6px 7px -3px rgba(0, 0, 0, 0.35);
-}
+      <div class="header-right">
+        <span class="material-icons-outlined">account_circle</span>
+        <span>{{username}}</span>
 
-.menu-icon {
-  display: none;
-}
+      </div>
+    </header>
+    <!-- End Header -->
 
-/* ---------- SIDEBAR ---------- */
-
-#sidebar {
-  grid-area: sidebar;
-  height: 100%;
-  background-color: #263043;
-  overflow-y: auto;
-  transition: all 0.5s;
-  -webkit-transition: all 0.5s;
-}
-
-.sidebar-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 30px 30px 30px;
-  margin-bottom: 30px;
-}
-
-.sidebar-title > span {
-  display: none;
-}
-
-.sidebar-brand {
-  margin-top: 15px;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.sidebar-list {
-  padding: 0;
-  margin-top: 15px;
-  list-style-type: none;
-}
-
-.sidebar-list-item {
-  padding: 20px 20px 20px 20px;
-  font-size: 18px;
-}
-#aa{
-  background-color: rgba(255, 255, 255, 0.2);
-}
-.sidebar-list-item:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  cursor: pointer;
-}
-
-.sidebar-list-item > a {
-  text-decoration: none;
-  color: #9e9ea4;
-}
-
-.sidebar-responsive {
-  display: inline !important;
-  position: absolute;
-  /*
-    the z-index of the ApexCharts is 11
-    we want the z-index of the sidebar higher so that
-    the charts are not showing over the sidebar 
-    on small screens
-  */
-  z-index: 12 !important;
-}
-
-/* ---------- MAIN ---------- */
-
-.main-container {
-  grid-area: main;
-  overflow-y: auto;
-  padding: 20px 20px;
-  color: rgba(255, 255, 255, 0.95);
-}
-
-.main-title {
-  display: flex;
-  justify-content: space-between;
-}
-
-.main-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-   gap: 20px;
-   margin: 20px 0;
-} 
-
-.card {
-  display: flex;
-  flex-direction: column;
-  
-  padding: 25px;
-  border-radius: 5px;
-}
-
-.card{
-  background-color: #2962ff;
-  height: auto;
-}
-
-
-.card-inner {
-  display: flex;
-  align-items: center;
- /* justify-content: space-between;*/
-}
-
-
-
-.charts {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-top: 60px;
-}
-
-.charts-card {
-  background-color: #263043;
-  margin-bottom: 20px;
-  padding: 25px;
-  box-sizing: border-box;
-  -webkit-column-break-inside: avoid;
-  border-radius: 5px;
-  box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
-}
-
-.chart-title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* ---------- MEDIA QUERIES ---------- */
-
-/* Medium <= 992px */
-
-@media screen and (max-width: 992px) {
-  .grid-container {
-    grid-template-columns: 1fr;
-    grid-template-rows: 0.2fr 3fr;
-    grid-template-areas:
-      'header'
-      'main';
-  }
-
-  #sidebar {
-    display: none;
-  }
-
-  .menu-icon {
-    display: inline;
-  }
-
-  .sidebar-title > span {
-    display: inline;
-  }
-}
-
-/* Small <= 768px */
-
-@media screen and (max-width: 768px) {
-  .main-cards {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    margin-bottom: 0;
-  }
-
-  .charts {
-    grid-template-columns: 1fr;
-    margin-top: 30px;
-  }
-}
-
-/* Extra Small <= 576px */
-
-@media screen and (max-width: 576px) {
-  .hedaer-left {
-    display: none;
-  }
-}
-/* Add appropriate styling for the travel cards */
-.travel-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    /*justify-content: space-around;*/
-}
-
-.card {
-   width: 18rem; /* Adjust the width as needed*/
-}
-label {
-        color: black;
-    }
-
-    </style>
-  </head>
-  <body>
-    <div class="grid-container">
-
-      <!-- Header -->
-      <header class="header">
-        <div class="menu-icon" onclick="openSidebar()">
-          <span class="material-icons-outlined">menu</span>
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <div class="sidebar-title">
+        <div class="sidebar-brand">
+          Travol
         </div>
-        
-        <div class="header-right">
-          <span class="material-icons-outlined">account_circle</span>
-          <span >{{username}}</span>
+        <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+      </div>
 
-        </div>
-      </header>
-      <!-- End Header -->
+      <ul class="sidebar-list">
+        <li class="sidebar-list-item">
+          <a href="{% url 'administrator_dashboard' %}" target="_blank">
+            <span class="material-icons-outlined">dashboard</span> Dashboard
+          </a>
+        </li>
+        <li class="sidebar-list-item" id="aa">
+          <a href="{% url 'list_travels'%}" target="_blank">
+            <span class="material-icons-outlined">card_travel</span> Travels
+          </a>
+        </li>
 
-      <!-- Sidebar -->
-      <aside id="sidebar">
-        <div class="sidebar-title">
-          <div class="sidebar-brand">
-           Travol
-          </div>
-          <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
-        </div>
+        <li class="sidebar-list-item">
+          <a href="{% url 'add_promotion' %}" target="_blank">
+            <span class="material-icons-outlined">local_offer</span> Promotions
+          </a>
+        </li>
 
-        <ul class="sidebar-list">
-          <li class="sidebar-list-item">
-            <a href="{% url 'administrator_dashboard' %}" target="_blank">
-              <span class="material-icons-outlined">dashboard</span> Dashboard
-            </a>
-          </li>
-          <li class="sidebar-list-item" id="aa">
-            <a href="{% url 'list_travels'%}" target="_blank">
-                <span class="material-icons-outlined">card_travel</span> Travels
-            </a>
-          </li>
-        
-          <li class="sidebar-list-item">
-            <a href="{% url 'add_promotion' %}" target="_blank">
-                <span class="material-icons-outlined">local_offer</span> Promotions
-            </a>
-          </li>
-          
-          <li class="sidebar-list-item">
-            <a href="{% url 'client_list' %}" target="_blank">
-              <span class="material-icons-outlined">groups</span> Customers
-            </a>
-          </li>
-          
-          <li class="sidebar-list-item">
-            <a href="{% url 'home_page' %}" target="_blank">
-              <span class="material-icons-outlined">poll</span> Go home
-            </a>
-          </li>
-          <li class="sidebar-list-item">
-            <a href="{% url 'logout_view' %}" target="_blank">
-              <span class="material-icons-outlined">settings</span> LogOut
-            </a>
-          </li>
-        </ul>
-      </aside>
-      <!-- End Sidebar -->
+        <li class="sidebar-list-item">
+          <a href="{% url 'client_list' %}" target="_blank">
+            <span class="material-icons-outlined">groups</span> Customers
+          </a>
+        </li>
 
-      <!-- Main -->
-      <!-- List_travels.html -->
+        <li class="sidebar-list-item">
+          <a href="{% url 'home_page' %}" target="_blank">
+            <span class="material-icons-outlined">poll</span> Go home
+          </a>
+        </li>
+        <li class="sidebar-list-item">
+          <a href="{% url 'logout_view' %}" target="_blank">
+            <span class="material-icons-outlined">settings</span> LogOut
+          </a>
+        </li>
+      </ul>
+    </aside>
+    <!-- End Sidebar -->
 
-<!-- List_travels.html -->
+    <!-- Main -->
+    <!-- List_travels.html -->
 
-<main class="main-container">
-    <div class="main-title">
+    <!-- List_travels.html -->
+
+    <main class="main-container">
+      <div class="main-title">
         <h2>Travel List</h2>
-        <button class="btn btn-primary" data-toggle="modal" data-target="#addTravelModal{{ travel.id }}">Add Travel</button>
-        <div class="modal fade" id="addTravelModal{{ travel.id }}" tabindex="-1" role="dialog" aria-labelledby="addTravelModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addTravelModalLabel">Add Travel</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Your form content goes here -->
-                        <form method="post" action="" id="addTravelForm{{ travel.id }}">
-                            {% csrf_token %}
-                            <div class="mb-3">
-                                <label for="city" class="form-label">City</label>
-                                <input type="text" class="form-control" id="city" name="city" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="destination" class="form-label">Destination</label>
-                                <input type="text" class="form-control" id="destination" name="destination" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="duration_days" class="form-label">Duration </label>
-                                <input type="text" class="form-control" id="duration_days"name="duration_days" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="price" class="form-label">Price</label>
-                                <input type="text" class="form-control" id="price" name="price" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="image" class="form-label">Image URL</label>
-                                <input type="file" class="form-control" id="image" name="image" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Add Travel</button>
-                        </form>
-                    </div>
-                </div>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#addTravelModal{{ travel.id }}">Add
+          Travel</button>
+        <div class="modal fade" id="addTravelModal{{ travel.id }}" tabindex="-1" role="dialog"
+          aria-labelledby="addTravelModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addTravelModalLabel">Add Travel</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <!-- Your form content goes here -->
+                <form method="post" action="" id="addTravelForm{{ travel.id }}">
+                  {% csrf_token %}
+                  <div class="mb-3">
+                    <label for="city" class="form-label">City</label>
+                    <input type="text" class="form-control" id="city" name="city" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="destination" class="form-label">Destination</label>
+                    <input type="text" class="form-control" id="destination" name="destination" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="duration_days" class="form-label">Duration </label>
+                    <input type="text" class="form-control" id="duration_days" name="duration_days" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="text" class="form-control" id="price" name="price" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="image" class="form-label">Image URL</label>
+                    <input type="file" class="form-control" id="image" name="image" required>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Add Travel</button>
+                </form>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="travel-list">
+      <div class="travel-list">
         {% for travel in travel_list %}
         <div class="card mb-3" style="max-width: 18rem;">
-            <img src="{{ travel.image.url}}" class="card-img-top" alt="Travel Image" style="height: 200px; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title">{{ travel.city }}</h5>
-                <p class="card-text">{{ travel.destination }}</p>
-                <button class="btn btn-danger" onclick="deleteTravel({{ travel.id }})">Delete</button>
-               
+          <img src="{{ travel.image.url}}" class="card-img-top" alt="Travel Image"
+            style="height: 200px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">{{ travel.city }}</h5>
+            <p class="card-text">{{ travel.destination }}</p>
+            <button class="btn btn-danger" onclick="deleteTravel('{{ travel.id }}')">Delete</button>
 
-                <!-- Add the modal here -->
-               
-            </div>
+
+            <!-- Add the modal here -->
+
+          </div>
         </div>
         {% endfor %}
-    </div>
-</main>
+      </div>
+    </main>
 
-<!-- Add this script in your HTML file if you're using Bootstrap 5 -->
-<script>
-
-  
-
-   
-</script>
+    <!-- Add this script in your HTML file if you're using Bootstrap 5 -->
+    <script>
 
 
-    
-    
+
+
+    </script>
+
+
+
+
     <!-- Add this script in your HTML file -->
-<script>
-    function deleteTravel(travelId) {
+    <script>
+      function deleteTravel(travelId) {
         // Display a confirmation dialog
         const isConfirmed = confirm('Are you sure you want to delete this travel?');
 
         if (isConfirmed) {
-            // Send an AJAX request to the server to delete the travel
-            fetch(`/delete_travel/${travelId}`, {
-                method: 'DELETE',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}', // Include the CSRF token
-                    'Content-Type': 'application/json',
-                },
-            })
+          // Send an AJAX request to the server to delete the travel
+          fetch(`/delete_travel/${travelId}`, {
+            method: 'DELETE',
+            headers: {
+              'X-CSRFToken': '{{ csrf_token }}', // Include the CSRF token
+              'Content-Type': 'application/json',
+            },
+          })
             .then(response => {
-                if (response.ok) {
-                    // Reload the page after successful deletion
-                    location.reload();
-                } else {
-                    console.error('Error deleting travel');
-                }
+              if (response.ok) {
+                // Reload the page after successful deletion
+                location.reload();
+              } else {
+                console.error('Error deleting travel');
+              }
             })
             .catch(error => console.error('Error:', error));
         }
-    }
-</script>
-
- 
-    
-      <!-- End Main -->
-
-    </div>
-
-    <!-- Scripts -->
-    <!-- ApexCharts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
-    <!-- Custom JS -->
-    <script >
-      // SIDEBAR TOGGLE
-
-let sidebarOpen = false;
-const sidebar = document.getElementById('sidebar');
-
-function openSidebar() {
-  if (!sidebarOpen) {
-    sidebar.classList.add('sidebar-responsive');
-    sidebarOpen = true;
-  }
-}
-
-function closeSidebar() {
-  if (sidebarOpen) {
-    sidebar.classList.remove('sidebar-responsive');
-    sidebarOpen = false;
-  }
-}
-
-// ---------- CHARTS ----------
-
-
+      }
     </script>
-  </body>
+
+
+
+    <!-- End Main -->
+
+  </div>
+
+  <!-- Scripts -->
+  <!-- ApexCharts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
+  <!-- Custom JS -->
+  <script>
+    // SIDEBAR TOGGLE
+
+    let sidebarOpen = false;
+    const sidebar = document.getElementById('sidebar');
+
+    function openSidebar() {
+      if (!sidebarOpen) {
+        sidebar.classList.add('sidebar-responsive');
+        sidebarOpen = true;
+      }
+    }
+
+    function closeSidebar() {
+      if (sidebarOpen) {
+        sidebar.classList.remove('sidebar-responsive');
+        sidebarOpen = false;
+      }
+    }
+
+    // ---------- CHARTS ----------
+
+
+  </script>
+</body>
+
 </html>

@@ -51,15 +51,9 @@ class Travel(models.Model):
 
 
 class Reservation(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    my_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     travel = models.ForeignKey(Travel, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
-    email = models.EmailField()
-    address = models.TextField()
-    card_number = models.CharField(max_length=16)
-    expiration_date = models.CharField(max_length=10)
-    cvv = models.CharField(max_length=3)
-    created_at = models.DateTimeField(auto_now_add=True)
+    date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"Reservation by {self.user.username} at {self.created_at}"
+        return f"{self.user} - {self.travel}"

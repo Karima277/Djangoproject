@@ -3,13 +3,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
-from django.db.models import Q
-from django.views.decorators.csrf import csrf_exempt, csrf_protect, requires_csrf_token
-from django.views.decorators.http import require_POST
 from .forms import SignUpForm, LoginForm, PromotionForm
-from .models import Travel, CustomUser, Promotion, Reservation
+from .models import Travel, CustomUser, Reservation
 
 def home(request):
     return render(request, 'myfirstapp/index.html')
@@ -100,15 +96,10 @@ def reserve(request, travel_id):
         expiration_date = request.POST.get('expiration')
         cvv = request.POST.get('cvv')
         reservation = Reservation(
-            user=request.user,
+            my_user=request.user,
             travel=travel,
-            name=name,
-            email=email,
-            address=address,
-            card_number=card_number,
-            expiration_date=expiration_date,
-            cvv=cvv
-        )
+            date=date.today()
+            )
         reservation.save()
         return redirect('success_page')
     return render(request, 'your_template.html', {'travel': travel})

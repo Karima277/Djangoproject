@@ -1,9 +1,9 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import DateInput
-from .models import CustomUser
-from django.contrib.auth import login
-from django.contrib.auth.forms import AuthenticationForm
+from .models import CustomUser, Promotion, Travel
+
+
 class SignUpForm(UserCreationForm):
     class Meta:
         model = CustomUser
@@ -35,8 +35,6 @@ class LoginForm(AuthenticationForm):
             'password': forms.PasswordInput(attrs={'placeholder': 'Enter your password'}),
         }
 
-from django import forms
-from .models import Promotion, Travel
 
 class PromotionForm(forms.ModelForm):
     travel = forms.ModelChoiceField(queryset=Travel.objects.all(), label='Select Travel')
@@ -44,4 +42,3 @@ class PromotionForm(forms.ModelForm):
     class Meta:
         model = Promotion
         fields = ['name', 'discount_percentage', 'start_date', 'end_date', 'travel']
-
