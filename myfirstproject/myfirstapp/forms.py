@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import DateInput
-from .models import CustomUser, Promotion, Travel
+from .models import CustomUser, Promotion, Reservation, Travel
 
 
 class SignUpForm(UserCreationForm):
@@ -42,3 +42,15 @@ class PromotionForm(forms.ModelForm):
     class Meta:
         model = Promotion
         fields = ['name', 'discount_percentage', 'start_date', 'end_date', 'travel']
+
+
+class ReservationForm(forms.ModelForm):
+    class Meta:
+        model = Reservation
+        fields = ['name', 'email', 'address', 'cardnumber', 'expiration', 'cvv']
+
+    def clean_cardnumber(self):
+        cardnumber = self.cleaned_data.get('cardnumber')
+        if len(cardnumber) != 16:
+            raise forms.ValidationError("Card number must be 16 digits")
+        return cardnumber

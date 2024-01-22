@@ -1,448 +1,226 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Clients</title>
 
-    <!-- Montserrat Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Clients</title>
 
-    <!-- Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <!-- Montserrat Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
 
-    <!-- Custom CSS -->
-   
-    <style>
-      body {
-  margin: 0;
-  padding: 0;
-  background-color: #1d2634;
-  color: #9e9ea4;
-  font-family: 'Montserrat', sans-serif;
-}
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
-.material-icons-outlined {
-  vertical-align: middle;
-  line-height: 1px;
-  font-size: 35px;
-}
+  <!-- Custom CSS -->
 
-.grid-container {
-  display: grid;
-  grid-template-columns: 260px 1fr 1fr 1fr;
-  grid-template-rows: 0.2fr 3fr;
-  grid-template-areas:
-    'sidebar header header header'
-    'sidebar main main main';
-  height: 100vh;
-}
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
 
-/* ---------- HEADER ---------- */
-.header {
-  grid-area: header;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 30px 0 30px;
-  box-shadow: 0 6px 7px -3px rgba(0, 0, 0, 0.35);
-}
+<body>
+  <div class="grid-container">
 
-.menu-icon {
-  display: none;
-}
+    <!-- Header -->
+    <header class="header">
+      <div class="menu-icon" onclick="openSidebar()">
+        <span class="material-icons-outlined">menu</span>
+      </div>
 
-/* ---------- SIDEBAR ---------- */
+      <div class="header-right">
+        <span class="material-icons-outlined">account_circle</span>
+        <span>{{ username }}</span>
 
-#sidebar {
-  grid-area: sidebar;
-  height: 100%;
-  background-color: #263043;
-  overflow-y: auto;
-  transition: all 0.5s;
-  -webkit-transition: all 0.5s;
-}
+      </div>
+    </header>
+    <!-- End Header -->
 
-.sidebar-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 30px 30px 30px;
-  margin-bottom: 30px;
-}
-
-.sidebar-title > span {
-  display: none;
-}
-
-.sidebar-brand {
-  margin-top: 15px;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.sidebar-list {
-  padding: 0;
-  margin-top: 15px;
-  list-style-type: none;
-}
-
-.sidebar-list-item {
-  padding: 20px 20px 20px 20px;
-  font-size: 18px;
-}
-
-.sidebar-list-item:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  cursor: pointer;
-}
-#aa{
-    background-color: rgba(255, 255, 255, 0.2);
-}
-.sidebar-list-item > a {
-  text-decoration: none;
-  color: #9e9ea4;
-}
-
-.sidebar-responsive {
-  display: inline !important;
-  position: absolute;
-  /*
-    the z-index of the ApexCharts is 11
-    we want the z-index of the sidebar higher so that
-    the charts are not showing over the sidebar 
-    on small screens
-  */
-  z-index: 12 !important;
-}
-
-/* ---------- MAIN ---------- */
-
-.main-container {
-  grid-area: main;
-  overflow-y: auto;
-  padding: 20px 20px;
-  color: rgba(255, 255, 255, 0.95);
-}
-
-.main-title {
-  display: flex;
-  justify-content: space-between;
-}
-
-.main-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 20px;
-  margin: 20px 0;
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  padding: 25px;
-  border-radius: 5px;
-}
-
-.card:first-child {
-  background-color: #2962ff;
-}
-
-.card:nth-child(2) {
-  background-color: #ff6d00;
-}
-
-.card:nth-child(3) {
-  background-color: #2e7d32;
-}
-
-.card:nth-child(4) {
-  background-color: #d50000;
-}
-
-.card-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.card-inner > .material-icons-outlined {
-  font-size: 45px;
-}
-
-.charts {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-top: 60px;
-}
-
-.charts-card {
-  background-color: #263043;
-  margin-bottom: 20px;
-  padding: 25px;
-  box-sizing: border-box;
-  -webkit-column-break-inside: avoid;
-  border-radius: 5px;
-  box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
-}
-
-.chart-title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* ---------- MEDIA QUERIES ---------- */
-
-/* Medium <= 992px */
-
-@media screen and (max-width: 992px) {
-  .grid-container {
-    grid-template-columns: 1fr;
-    grid-template-rows: 0.2fr 3fr;
-    grid-template-areas:
-      'header'
-      'main';
-  }
-
-  #sidebar {
-    display: none;
-  }
-
-  .menu-icon {
-    display: inline;
-  }
-
-  .sidebar-title > span {
-    display: inline;
-  }
-}
-
-/* Small <= 768px */
-
-@media screen and (max-width: 768px) {
-  .main-cards {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    margin-bottom: 0;
-  }
-
-  .charts {
-    grid-template-columns: 1fr;
-    margin-top: 30px;
-  }
-}
-
-/* Extra Small <= 576px */
-
-@media screen and (max-width: 576px) {
-  .hedaer-left {
-    display: none;
-  }
-}
-    </style>
-  </head>
-  <body>
-    <div class="grid-container">
-
-      <!-- Header -->
-      <header class="header">
-        <div class="menu-icon" onclick="openSidebar()">
-          <span class="material-icons-outlined">menu</span>
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <div class="sidebar-title">
+        <div class="sidebar-brand">
+          Travol
         </div>
-        
-        <div class="header-right">
-          <span class="material-icons-outlined">account_circle</span>
-          <span >{{ username }}</span>
+        <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+      </div>
 
-        </div>
-      </header>
-      <!-- End Header -->
-
-      <!-- Sidebar -->
-      <aside id="sidebar">
-        <div class="sidebar-title">
-          <div class="sidebar-brand">
-           Travol
-          </div>
-          <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
-        </div>
-
-        <ul class="sidebar-list">
-          <li class="sidebar-list-item">
-            <a href="{% url 'administrator_dashboard' %}" target="_blank">
-              <span class="material-icons-outlined">dashboard</span> Dashboard
-            </a>
-          </li>
-          <li class="sidebar-list-item">
-            <a href="{% url 'list_travels'%}" target="_blank">
-                <span class="material-icons-outlined">card_travel</span> Travels
-            </a>
-          </li>
-        
-          <li class="sidebar-list-item">
-            <a href="{% url 'add_promotion' %}" target="_blank">
-                <span class="material-icons-outlined">local_offer</span> Promotions
-            </a>
-          </li>
-          
-          <li class="sidebar-list-item" id="aa">
-            <a href="{% url 'client_list' %}" target="_blank">
-              <span class="material-icons-outlined">groups</span> Customers
-            </a>
-          </li>
-          
-          <li class="sidebar-list-item">
-            <a href="{% url 'home_page' %}" target="_blank">
-                <span class="material-icons-outlined">home</span> Go home
-            </a>
+      <ul class="sidebar-list">
+        <li class="sidebar-list-item" id="aa">
+          <a href="{% url 'administrator_dashboard' %}">
+            <span class="material-icons-outlined">dashboard</span> Dashboard
+          </a>
         </li>
-          <li class="sidebar-list-item">
-            <a href="{% url 'logout_view' %}" target="_blank">
-                <span class="material-icons-outlined">exit_to_app</span> LogOut
-            </a>
+        <li class="sidebar-list-item">
+          <a href="{% url 'list_travels'%}">
+            <span class="material-icons-outlined">card_travel</span> Travels
+          </a>
         </li>
-        </ul>
-      </aside>
-      <!-- End Sidebar -->
 
-      <!-- Main -->
-      {% block content %}
+        <li class="sidebar-list-item">
+          <a href="{% url 'add_promotion' %}">
+            <span class="material-icons-outlined">local_offer</span> Promotions
+          </a>
+        </li>
+
+
+        <li class="sidebar-list-item">
+          <a href="{% url 'client_list' %}">
+            <span class="material-icons-outlined">groups</span> Customers
+          </a>
+        </li>
+
+        <li class="sidebar-list-item">
+          <a href="{% url 'home_page' %}">
+            <span class="material-icons-outlined">home</span> Go home
+          </a>
+        </li>
+        <li class="sidebar-list-item">
+          <a href="{% url 'logout_view' %}">
+            <span class="material-icons-outlined">exit_to_app</span> LogOut
+          </a>
+        </li>
+      </ul>
+    </aside>
+    <!-- End Sidebar -->
+
+    <!-- Main -->
+    {% block content %}
     <div class="main-container">
-        <div class="main-title">
-            <h2>Clients List</h2>
-        </div>
-    
-        <div class="customer-list">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for user in user_list %}
-                        <tr>
-                            <td>{{ user.id }}</td>
-                            <td>{{ user.first_name }}</td>
-                            <td>{{ user.last_name }}</td>
-                            <td>{{ user.username }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>
-                                <button class="btn btn-danger" onclick="deleteUser({{ user.id }})">Delete</button>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+      <div class="main-title">
+        <h2>Clients List</h2>
+      </div>
+
+      <div class="customer-list">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in user_list %}
+            <tr>
+              <td>{{ user.id }}</td>
+              <td>{{ user.first_name }}</td>
+              <td>{{ user.last_name }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+              <td>
+                <form action="{% url 'delete_client' user.id %}" method="POST">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger">Delete</button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
     <style>
-       
-        .customer-list {
-            margin-top: 20px;
-        }
+      .customer-list {
+        margin-top: 20px;
+      }
 
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+      }
 
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
+      th,
+      td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
 
-        th {
-            background-color: #f2f2f2;
-            color: #1d2634;
-        }
+      th {
+        background-color: #f2f2f2;
+        color: #1d2634;
+      }
 
-        .btn-danger {
-            background-color: #dc3545;
-            color: #fff;
-            border: 1px solid #dc3545;
-        }
+      .btn-danger {
+        background-color: #dc3545;
+        color: #fff;
+        border: 1px solid #dc3545;
+      }
 
-        .btn-danger:hover {
-            background-color: #c82333;
-            border: 1px solid #c82333;
-        }
+      .btn-danger:hover {
+        background-color: #c82333;
+        border: 1px solid #c82333;
+      }
     </style>
 
     <script>
-        function deleteUser(userId) {
-            // Add logic to handle user deletion, for example, send a request to the server
-            // with the user ID and perform necessary actions.
-            console.log("Deleting user with ID:", userId);
-        }
+      function deleteUser(userId) {
+        // Add logic to handle user deletion, for example, send a request to the server
+        // with the user ID and perform necessary actions.
+        console.log("Deleting user with ID:", userId);
+      }
     </script>
-{% endblock %}
+    {% endblock %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
     <script>
-         function deleteUser(userId) {
-            if (confirm("Are you sure you want to delete this user?")) {
-                // Send AJAX request to delete user
-                fetch(`/delete_user/${userId}/`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': '{{ csrf_token }}',
-                    },
-                })
-                .then(response => {
-                    if (response.ok) {
-                        location.reload();  // Reload the page after successful deletion
-                    } else {
-                        console.error('Error deleting user');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error deleting user', error);
-                });
-            }
+      function deleteUser(userId) {
+        if (confirm("Are you sure you want to delete this user?")) {
+          // Send AJAX request to delete user
+          fetch(`/delete_user/${userId}/`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': '{{ csrf_token }}',
+            },
+          })
+            .then(response => {
+              if (response.ok) {
+                location.reload();  // Reload the page after successful deletion
+              } else {
+                console.error('Error deleting user');
+              }
+            })
+            .catch(error => {
+              console.error('Error deleting user', error);
+            });
         }
+      }
     </script>
-    
-      <!-- End Main -->
 
-    </div>
+    <!-- End Main -->
 
-    <!-- Scripts -->
-    <!-- ApexCharts -->
-   
-    <script >
-      // SIDEBAR TOGGLE
+  </div>
 
-let sidebarOpen = false;
-const sidebar = document.getElementById('sidebar');
+  <!-- Scripts -->
+  <!-- ApexCharts -->
 
-function openSidebar() {
-  if (!sidebarOpen) {
-    sidebar.classList.add('sidebar-responsive');
-    sidebarOpen = true;
-  }
-}
+  <script>
+    // SIDEBAR TOGGLE
 
-function closeSidebar() {
-  if (sidebarOpen) {
-    sidebar.classList.remove('sidebar-responsive');
-    sidebarOpen = false;
-  }
-}
+    let sidebarOpen = false;
+    const sidebar = document.getElementById('sidebar');
 
-// ---------- CHARTS ----------
+    function openSidebar() {
+      if (!sidebarOpen) {
+        sidebar.classList.add('sidebar-responsive');
+        sidebarOpen = true;
+      }
+    }
+
+    function closeSidebar() {
+      if (sidebarOpen) {
+        sidebar.classList.remove('sidebar-responsive');
+        sidebarOpen = false;
+      }
+    }
+
+    // ---------- CHARTS ----------
 
 
-    </script>
-  </body>
+  </script>
+</body>
+
 </html>

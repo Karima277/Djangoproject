@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .forms import SignUpForm, LoginForm, PromotionForm
+from .forms import ReservationForm, SignUpForm, LoginForm, PromotionForm
 from .models import Travel, CustomUser, Reservation
 
 def home(request):
@@ -34,7 +34,10 @@ def travel_details(request, travel_id):
     return render(request, 'myfirstapp/details.html', {'travel': travel})
 
 def travels(request):
-    context = {'Travels': Travel.objects.all()}
+    travels = Travel.objects.all()
+    travels = [apply_promotion(travel) for travel in travels]
+    context = {'Travels': travels}
+
     return render(request, 'myfirstapp/travels.html', context)
 
 def Reservation(request):
@@ -66,8 +69,9 @@ def search_results(request):
 
 def apply_promotion(travel):
     promotion = travel.promotion
-    if promotion and promotion.start_date <= date.today() <= promotion.end_date:
+    if promotion and (promotion.start_date <= date.today() <= promotion.end_date):
         travel.price -= travel.price * (promotion.discount_percentage / 100)
+        travel.price  = round(travel.price, 2)
     return travel
 
 def login_view(request):
@@ -89,20 +93,24 @@ def logout_view(request):
 def reserve(request, travel_id):
     travel = get_object_or_404(Travel, id=travel_id)
     if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        address = request.POST.get('address')
-        card_number = request.POST.get('cardnumber')
-        expiration_date = request.POST.get('expiration')
-        cvv = request.POST.get('cvv')
-        reservation = Reservation(
-            my_user=request.user,
-            travel=travel,
-            date=date.today()
-            )
-        reservation.save()
-        return redirect('success_page')
-    return render(request, 'your_template.html', {'travel': travel})
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.my_user = request.user
+            reservation.travel = travel
+            reservation.date = date.today()
+            try:
+                reservation.save()
+                return redirect('success_page')
+            except Exception as e:
+                # Log the error here
+                return render(request, 'error_template.html', {'message': 'Could not save reservation.'})
+        else:
+            # Form is not valid, render the form again with error messages
+            return render(request, 'myfirstapp/profile.html', {'form': form, 'travel': travel})
+    else:
+        form = ReservationForm()
+        return render(request, 'myfirstapp/profile.html', {'form': form, 'travel': travel})
 
 @login_required(login_url="/login")
 def updateprofil(request):
@@ -158,14 +166,15 @@ def client_list(request):
     }
     return render(request, 'myfirstapp/Clients.html', context)
 
-def delete_user(request, user_id):
-    user = get_object_or_404(CustomUser, pk=user_id)
+def delete_client(request, client_id):
+    user = get_object_or_404(CustomUser, pk=client_id)
     user.delete()
     return JsonResponse({'message': 'User deleted successfully'})
 
 @login_required
 def list_travels(request):
     travels = Travel.objects.all()
+    travels = [apply_promotion(travel) for travel in travels]
     username = request.user.username
     context = {
         'username': username,
@@ -187,8 +196,40 @@ def add_promotion(request):
             selected_travel = form.cleaned_data['travel']
             selected_travel.promotion = promotion
             selected_travel.save()
-            return redirect('add_promotion')
+            return render(request, 'myfirstapp/promotions.html',  {'form': form, **context})
     else:
         form = PromotionForm()
     context['username'] = request.user.username
     return render(request, 'myfirstapp/promotions.html',  {'form': form, **context})
+
+def add_travel(request):
+    context = {}
+    if request.method == 'POST':
+        city = request.POST.get('city')
+        price = request.POST.get('price')
+        destination = request.POST.get('destination')
+        duration_days = request.POST.get('duration_days')
+        image = request.FILES.get('image')
+        travel = Travel(city=city, price=price, destination=destination, duration_days=duration_days, image=image)
+        travel.save()
+        return render(request, 'myfirstapp/List_travels.html', context)
+    else:
+        return render(request, 'myfirstapp/List_travels.html', context)
+    
+def edit_travel(request, travel_id):
+    travel = get_object_or_404(Travel, id=travel_id)
+    if request.method == 'POST':
+        city = request.POST.get('edit_city')
+        price = request.POST.get('edit_price')
+        destination = request.POST.get('edit_destination')
+        duration_days = request.POST.get('edit_duration_days')
+        image = request.FILES.get('edit_image')
+        travel.city = city
+        travel.price = price
+        travel.destination = destination
+        travel.duration_days = duration_days
+        travel.image = image
+        travel.save()
+        return render(request, 'myfirstapp/List_travels.html', {'travel': travel})
+    else:
+        return render(request, 'myfirstapp/List_travels.html', {'travel': travel})

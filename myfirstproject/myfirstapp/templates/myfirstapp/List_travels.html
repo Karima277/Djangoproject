@@ -48,37 +48,38 @@
       </div>
 
       <ul class="sidebar-list">
-        <li class="sidebar-list-item">
-          <a href="{% url 'administrator_dashboard' %}" target="_blank">
+        <li class="sidebar-list-item" id="aa">
+          <a href="{% url 'administrator_dashboard' %}">
             <span class="material-icons-outlined">dashboard</span> Dashboard
           </a>
         </li>
-        <li class="sidebar-list-item" id="aa">
-          <a href="{% url 'list_travels'%}" target="_blank">
+        <li class="sidebar-list-item">
+          <a href="{% url 'list_travels'%}">
             <span class="material-icons-outlined">card_travel</span> Travels
           </a>
         </li>
 
         <li class="sidebar-list-item">
-          <a href="{% url 'add_promotion' %}" target="_blank">
+          <a href="{% url 'add_promotion' %}">
             <span class="material-icons-outlined">local_offer</span> Promotions
           </a>
         </li>
 
+
         <li class="sidebar-list-item">
-          <a href="{% url 'client_list' %}" target="_blank">
+          <a href="{% url 'client_list' %}">
             <span class="material-icons-outlined">groups</span> Customers
           </a>
         </li>
 
         <li class="sidebar-list-item">
-          <a href="{% url 'home_page' %}" target="_blank">
-            <span class="material-icons-outlined">poll</span> Go home
+          <a href="{% url 'home_page' %}">
+            <span class="material-icons-outlined">home</span> Go home
           </a>
         </li>
         <li class="sidebar-list-item">
-          <a href="{% url 'logout_view' %}" target="_blank">
-            <span class="material-icons-outlined">settings</span> LogOut
+          <a href="{% url 'logout_view' %}">
+            <span class="material-icons-outlined">exit_to_app</span> LogOut
           </a>
         </li>
       </ul>
@@ -107,7 +108,7 @@
               </div>
               <div class="modal-body">
                 <!-- Your form content goes here -->
-                <form method="post" action="" id="addTravelForm{{ travel.id }}">
+                <form method="post" action="{% url 'add_travel' %}" enctype="multipart/form-data">
                   {% csrf_token %}
                   <div class="mb-3">
                     <label for="city" class="form-label">City</label>
@@ -146,9 +147,50 @@
             <h5 class="card-title">{{ travel.city }}</h5>
             <p class="card-text">{{ travel.destination }}</p>
             <button class="btn btn-danger" onclick="deleteTravel('{{ travel.id }}')">Delete</button>
+            <button class="btn btn-primary" onclick="editTravel('{{ travel.id }}')">Edit</button>
 
-
-            <!-- Add the modal here -->
+            <!-- Add the modal for editing here -->
+            <div class="modal fade" id="editTravelModal{{ travel.id }}" tabindex="-1" role="dialog"
+              aria-labelledby="editTravelModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="editTravelModalLabel">Edit Travel</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <!-- Your form content for editing goes here -->
+                    <form method="post" action="{% url 'edit_travel' travel.id %}" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="mb-3">
+                        <label for="edit_city" class="form-label">City</label>
+                        <input type="text" class="form-control" id="edit_city" name="edit_city" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="edit_destination" class="form-label">Destination</label>
+                        <input type="text" class="form-control" id="edit_destination" name="edit_destination" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="edit_duration_days" class="form-label">Duration </label>
+                        <input type="text" class="form-control" id="edit_duration_days" name="edit_duration_days" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="edit_price" class="form-label">Price</label>
+                        <input type="text" class="form-control" id="edit_price" name="edit_price" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="edit_image" class="form-label">Image URL</label>
+                        <input type="file" class="form-control" id="edit_image" name="edit_image" required>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End modal for editing -->
 
           </div>
         </div>
@@ -192,6 +234,10 @@
             })
             .catch(error => console.error('Error:', error));
         }
+      }
+      function editTravel(travelId) {
+        // Display the modal for editing the travel
+        $('#editTravelModal' + travelId).modal('show');
       }
     </script>
 

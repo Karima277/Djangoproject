@@ -10,103 +10,6 @@
   
   </head>
  <body >
-    <div class="chat-icon">
-        <i style="color: white;" class="fas fa-comment-alt"></i>
-      </div>
-      
-      <div class="chat-container">
-        <div class="chat-header">
-          <h3> Kay, votre assistant virtuel</h3>
-          <button class="close-btn"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="chat-body">
-          <!-- Chat messages will be displayed here -->
-        </div>
-        <div class="chat-footer">
-          <input type="text" placeholder="Type your message...">
-          <button class="send-btn"><i class="fas fa-paper-plane"></i></button>
-        </div>
-      </div>
-      <script>
-  const chatIcon = document.querySelector('.chat-icon');
-  const chatContainer = document.querySelector('.chat-container');
-  const closeBtn = document.querySelector('.close-btn');
-  const sendBtn = document.querySelector('.send-btn');
-  const chatBody = document.querySelector('.chat-body');
-  const inputField = document.querySelector('input');
-  
-  let isChatOpen = false;
-  
-  // Toggle the visibility of the chat container
-  chatIcon.addEventListener('click', () => {
-    isChatOpen = !isChatOpen;
-    if (isChatOpen) {
-      chatContainer.style.display = 'block';
-    } else {
-      chatContainer.style.display = 'none';
-    }
-  });
-  
-  // Close the chat container when the close button is clicked
-  closeBtn.addEventListener('click', () => {
-    isChatOpen = false;
-    chatContainer.style.display = 'none';
-  });
-  
-  // Send a message when the send button is clicked
-  sendBtn.addEventListener('click', () => {
-    const message = inputField.value;
-    sendMessage(message);
-  });
-  
-  // Send a message when the enter key is pressed
-  inputField.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-      const message = inputField.value;
-      sendMessage(message);
-    }
-  });
-  
-  // Send a message to the chatbot and receive a response
-  function sendMessage(message) {
-    if (message.trim() === '') {
-      return;
-    }
-    const chatMessage = document.createElement('div');
-    chatMessage.classList.add('chat-message', 'outgoing');
-    chatMessage.textContent = message;
-    chatBody.appendChild(chatMessage);
-    inputField.value = '';
-    setTimeout(() => {
-      const response = getResponse(message);
-      const chatMessage = document.createElement('div');
-      chatMessage.classList.add('chat-message', 'incoming');
-      chatMessage.textContent = response;
-      chatBody.appendChild(chatMessage);
-      chatBody.scrollTop = chatBody.scrollHeight;
-    }, 1000);
-  }
-  
-  // Get a response from the chatbot based on the user's message
-  function getResponse(message) {
-    const keywords = {
-      acheter: "Chez nous, l'achat de votre propriété idéale est facile ! Que vous cherchiez une maison, un appartement ou un terrain, sélectionnez simplement le type de bien dans le menu en haut, ou remplissez le formulaire d'achat à l'accueil pour trouver la perle rare.",
-      vendre: "Vous souhaitez vendre votre bien rapidement et efficacement ? C'est facile avec Kay! Commencez par sélectionner le type de bien dans le menu en haut,puis continuez en remplissant notre formulaire détaillé pour décrire les caractéristiques de votre bien.",
-      louer: 'Vous cherchez un logement à louer ? Kay en ligne vous simplifie la vie ! Il vous suffit de sélectionner le type de bien que vous recherchez dans le menu en haut, puis de remplir notre formulaire de demande de location pour nous faire part de vos critères.',
-    };
-    const words = message.toLowerCase().split(' ');
-    for (const word of words) {
-      if (keywords[word]) {
-        return keywords[word];
-      }
-    }
-    return "I'm sorry, I didn't understand your message.";
-  }
-  
-      </script>
-
-  
-
 <section class="w-full h-[100vh]  bg-header  bg-cover bg-no-repeat bg-center bg-color1 bg-blend-multiply bg-opacity-60 " >
   <section class="w-full flex flex-wrap justify-center ">
       <header 
@@ -149,7 +52,7 @@
                 <div  class="card-body">
                     <h6 class="card-title d-inline-block align-middle"></h5>
                     <div class="float-right">
-                        {% if travel.promotion %}
+                        {% if travel.promotion and travel.promotion.start_date <= date.today() and travel.promotion.end_date >= date.today() %}
                         <p class="card-subtitle mb-2 text-muted d-inline-block align-middle">
                              {{ travel.promotion.name }} ({{ travel.promotion.discount_percentage }}% off)
                         </p>
