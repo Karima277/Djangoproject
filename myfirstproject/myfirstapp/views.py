@@ -5,7 +5,7 @@ from django.contrib.auth import login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .forms import ReservationForm, SignUpForm, LoginForm, PromotionForm
-from .models import Travel, CustomUser, Reservation
+from .models import Travel, CustomUser, Reservation, Promotion
 
 def home(request):
     return render(request, 'myfirstapp/index.html')
@@ -191,7 +191,10 @@ def delete_travel(request, travel_id):
     return JsonResponse({'message': 'Travel deleted successfully'})
 
 def add_promotion(request):
-    context = {}
+    promotions = Promotion.objects.all()
+    context = {
+        'promotions': promotions
+    }
     if request.method == 'POST':
         form = PromotionForm(request.POST)
         if form.is_valid():
@@ -204,6 +207,11 @@ def add_promotion(request):
         form = PromotionForm()
     context['username'] = request.user.username
     return render(request, 'myfirstapp/promotions.html',  {'form': form, **context})
+
+def delete_promotion(request, promotion_id):
+    promotion = get_object_or_404(Promotion, id=promotion_id)
+    promotion.delete()
+    return JsonResponse({'message': 'Promotion deleted successfully'})
 
 def add_travel(request):
     context = {}

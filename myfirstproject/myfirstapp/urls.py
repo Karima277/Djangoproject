@@ -41,6 +41,7 @@ urlpatterns = [
 
     # promotions
     path('add_promotion/', add_promotion, name='add_promotion'),
+    path('delete_promotion/<int:promotion_id>/', views.delete_promotion, name='delete_promotion'),
     
     # reservations
     path('Reservation/', Reservation, name='Reservation'),
