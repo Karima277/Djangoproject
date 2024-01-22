@@ -36,7 +36,10 @@ def travel_details(request, travel_id):
 def travels(request):
     travels = Travel.objects.all()
     travels = [apply_promotion(travel) for travel in travels]
-    context = {'Travels': travels}
+    context = {
+        'Travels': travels,
+        'today': date.today()
+        }
 
     return render(request, 'myfirstapp/travels.html', context)
 
@@ -178,7 +181,7 @@ def list_travels(request):
     username = request.user.username
     context = {
         'username': username,
-        'travel_list': travels,
+        'travel_list': travels
     }
     return render(request, 'myfirstapp/List_travels.html', context)
 
