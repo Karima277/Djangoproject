@@ -145,9 +145,39 @@
                                 </table>
                             </div>
                         </div>
+                        <!-- end user info -->
+                        
+                        
+
+
 
 
                     </div>
+                </div>
+                <!-- begin user reservation -->
+                <div>
+                    <table class="table profile__table">    
+                        <thead>
+                            <tr>
+                                <th>Reservation ID</th>
+                                <th>Reservation Date</th>
+                                <th>Destination</th>
+                                <th>cancel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reservation in my_reservations %}
+                            <tr>
+                                <td>{{ reservation.id }}</td>
+                                <td>{{ reservation.mydate }}</td>
+                                <td>{{ reservation.travel.city }} {{ reservation.travel.destination }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-sm">Cancel</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

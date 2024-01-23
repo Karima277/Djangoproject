@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (
     home, signup, travels, cart, reserved_travels, cancel_reservation,
-    login_view, profile, reserve, success, updateprofil, Reservation,
+    login_view, profile, reserve, success, updateprofil, reservation_view,
     administrator_dashboard, client_list, list_travels, delete_travel,
     delete_client,add_promotion
 )
@@ -44,7 +44,7 @@ urlpatterns = [
     path('delete_promotion/<int:promotion_id>/', views.delete_promotion, name='delete_promotion'),
     
     # reservations
-    path('Reservation/', Reservation, name='Reservation'),
+    path('Reservation/', reservation_view, name='Reservation'),
     path('cancel_reservation/<int:reservation_id>/', cancel_reservation, name='cancel_reservation'),
     path('reserved_travels/', reserved_travels, name='reserved_travels'),
     path('reserve/<int:travel_id>/', reserve, name='reserve'),

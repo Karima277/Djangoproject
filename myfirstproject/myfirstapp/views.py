@@ -11,7 +11,12 @@ def home(request):
     return render(request, 'myfirstapp/index.html')
 
 def profile(request):
-    return render(request, 'myfirstapp/profile.html')
+    my_reservations = Reservation.objects.filter(my_user=request.user)
+    context = {
+        'my_reservations': my_reservations,
+    }
+
+    return render(request, 'myfirstapp/profile.html', context)
 
 def signup(request):
     if request.method == 'POST':
@@ -43,7 +48,7 @@ def travels(request):
 
     return render(request, 'myfirstapp/travels.html', context)
 
-def Reservation(request):
+def reservation_view(request):
     return render(request, 'myfirstapp/Reservation.html')
 
 def search_results(request):
