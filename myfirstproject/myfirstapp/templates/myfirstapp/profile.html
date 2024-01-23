@@ -101,15 +101,15 @@
                         <!-- SIDEBAR MENU -->
                         <div class="profile-usermenu">
                             <ul class="nav">
-                                <li class="active">
+                                <li class="active" id="overview-btn">
                                     <a href="#">
                                         <i class="glyphicon glyphicon-home"></i>
                                         Overview </a>
                                 </li>
-                                <li>
+                                <li id="reservations-btn">
                                     <a href="#">
                                         <i class="glyphicon glyphicon-user"></i>
-                                        Mes voiyages </a>
+                                        Mes Reservations </a>
                                 </li>
                             </ul>
                         </div>
@@ -119,8 +119,7 @@
                 <div class="col-md-9">
                     <div class="profile-content">
                         <!-- user info -->
-                        <!-- User info -->
-                        <div class="panel panel-default">
+                        <div class="panel panel-default" id="overview">
                             <div class="panel-heading">
                                 <h4 class="panel-title">User info</h4>
                             </div>
@@ -141,6 +140,7 @@
                                         <tr>
                                             <th><strong>Birthday</strong></th>
                                             <td>{{ user.birth_date }}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -155,31 +155,54 @@
                     </div>
                 </div>
                 <!-- begin user reservation -->
-                <div>
-                    <table class="table profile__table">    
-                        <thead>
-                            <tr>
-                                <th>Reservation ID</th>
-                                <th>Reservation Date</th>
-                                <th>Destination</th>
-                                <th>cancel</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for reservation in my_reservations %}
-                            <tr>
-                                <td>{{ reservation.id }}</td>
-                                <td>{{ reservation.mydate }}</td>
-                                <td>{{ reservation.travel.city }} {{ reservation.travel.destination }}</td>
-                                <td>
-                                    <button type="button" class="btn btn-danger btn-sm">Cancel</button>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                <div class="panel panel-default" id="reservations" style="display: none;">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">User reservations</h4>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table profile__table">
+                            <thead>
+                                <tr>
+                                    <th>Reservation ID</th>
+                                    <th>Reservation Date</th>
+                                    <th>Destination</th>
+                                    <th>cancel</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for reservation in my_reservations %}
+                                <tr>
+                                    <td>{{ reservation.id }}</td>
+                                    <td>{{ reservation.mydate }}</td>
+                                    <td>{{ reservation.travel.city }} {{ reservation.travel.destination }}</td>
+                                    <td>
+                                        <form action="{% url 'cancel_reservation' reservation.id %}" method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">Cancel</button>
+                                          </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+                
             </div>
         </div>
     </div>
+    <script>
+        // Show user info when "overview" is clicked
+        document.getElementById("overview-btn").addEventListener("click", function() {
+            document.getElementById("overview").style.display = "block";
+            document.getElementById("reservations").style.display = "none";
+        });
+    
+        // Show user reservations when "mes reservations" is clicked
+        document.getElementById("reservations-btn").addEventListener("click", function() {
+            document.getElementById("overview").style.display = "none";
+            document.getElementById("reservations").style.display = "block";
+        });
+    </script>
+    
 </body>

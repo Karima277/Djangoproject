@@ -1,0 +1,74 @@
+<!-- user info -->
+<div class="panel panel-default" id="overview">
+    <div class="panel-heading">
+        <h4 class="panel-title">User info</h4>
+    </div>
+    <div class="panel-body">
+        <table class="table profile__table">
+            <tbody>
+                <tr>
+                    <th><strong>Username</strong></th>
+                    <td>{{ user.username }}</td>
+                </tr>
+                <tr>
+                    <th><strong>Full name</strong></th>
+                    <td>{{ user.first_name }} {{ user.last_name }}</td>
+                <tr>
+                    <th><strong>Email</strong></th>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <th><strong>Birthday</strong></th>
+                    <td>{{ user.birth_date }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- end user info -->
+
+<!-- user reservations -->
+<div class="panel panel-default" id="reservations" style="display: none;">
+    <div class="panel-heading">
+        <h4 class="panel-title">User reservations</h4>
+    </div>
+    <div class="panel-body">
+        <table class="table profile__table">
+            <thead>
+                <tr>
+                    <th>Reservation ID</th>
+                    <th>Reservation Date</th>
+                    <th>Destination</th>
+                    <th>cancel</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reservation in my_reservations %}
+                <tr>
+                    <td>{{ reservation.id }}</td>
+                    <td>{{ reservation.mydate }}</td>
+                    <td>{{ reservation.travel.city }} {{ reservation.travel.destination }}</td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm">Cancel</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- end user reservations -->
+
+<script>
+    // Show user info when "overview" is clicked
+    document.getElementById("overview-btn").addEventListener("click", function() {
+        document.getElementById("overview").style.display = "block";
+        document.getElementById("reservations").style.display = "none";
+    });
+
+    // Show user reservations when "mes reservations" is clicked
+    document.getElementById("reservations-btn").addEventListener("click", function() {
+        document.getElementById("overview").style.display = "none";
+        document.getElementById("reservations").style.display = "block";
+    });
+</script>

@@ -108,20 +108,10 @@
                                                                 <option value="dest" selected
                                                                         class="bg-color1 text-white">Destination
                                                                 </option>
-                                                                <option value="Italy" class="text-stone-600">Italy
-                                                                </option>
-                                                                <option value="France" class="text-stone-600">France
-                                                                </option>
-                                                                <option value="Maldives" class="text-stone-600">Maldives
-                                                                </option>
-                                                                <option value="Greece" class="text-stone-600">Greece
-                                                                </option>
-                                                                <option value="Canada" class="text-stone-600">Canada
-                                                                </option>
-                                                                <option value="Dubai" class="text-stone-600"> Dubai
-                                                                </option>
-                                                                <option value="Saudi-Arabia" class="text-stone-600">
-                                                                        Saudi-Arabia</option>
+                                                                {% for destination in destinations %}
+                                                                        <option value="{{destination}}" class="text-stone-600">{{destination}}</option>
+                                                                {% endfor %}
+                                                                
                                                         </select>
                                                         <select name="duration" id=""
                                                                 class="w-[25%] py-[15px] bg-white  ps-5" id="target">
@@ -131,9 +121,9 @@
                                                                 </option>
                                                                 <option value="2" class="text-stone-600">2-4 Days Tour
                                                                 </option>
-                                                                <option value="5" class="text-stone-600">5-7 Days Tour
+                                                                <option value="3" class="text-stone-600">5-7 Days Tour
                                                                 </option>
-                                                                <option value="7" class="text-stone-600">7+ Days Tour
+                                                                <option value="4" class="text-stone-600">7+ Days Tour
                                                                 </option>
                                                         </select>
                                                         <button type="submit"

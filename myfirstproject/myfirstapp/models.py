@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
-from datetime import date
+from datetime import date, datetime
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
@@ -54,7 +54,7 @@ class Travel(models.Model):
 class Reservation(models.Model):
     my_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     travel = models.ForeignKey(Travel, on_delete=models.CASCADE)
-    mydate = models.DateField(default=date(1970, 1, 1))
+    mydate = models.DateField(default=datetime.now)
     name = models.CharField(max_length=200,default='')
     email = models.EmailField(default='')
     address = models.CharField(max_length=200,default='')

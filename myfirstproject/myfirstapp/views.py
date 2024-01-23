@@ -8,7 +8,13 @@ from .forms import ReservationForm, SignUpForm, LoginForm, PromotionForm
 from .models import Travel, CustomUser, Reservation, Promotion
 
 def home(request):
-    return render(request, 'myfirstapp/index.html')
+    travels = Travel.objects.all()
+    destinations = set([travel.destination for travel in travels])
+    context = {
+        'travels':travels,
+        'destinations':destinations,
+    }
+    return render(request, 'myfirstapp/index.html',context)
 
 def profile(request):
     my_reservations = Reservation.objects.filter(my_user=request.user)
@@ -63,16 +69,15 @@ def search_results(request):
         if destination:
             travels = travels.filter(destination=destination)
         if duration:
-            try:
-                if '-' in duration:
-                    start, end = map(int, duration.split('-'))
-                    travels = travels.filter(duration_days__gte=start, duration_days__lte=end)
-                else:
-                    duration_int = int(duration)
-                    travels = travels.filter(duration_days=duration_int)
-            except ValueError:
-                pass
-        print(f"Number of travels after filtering: {travels.count()}")
+            if duration == '1':
+                travels = travels.filter(duration_days__lte=1)
+            elif duration == '2':
+                travels = travels.filter(duration_days__lte=4, duration_days__gte=2)
+            elif duration == '3':
+                travels = travels.filter(duration_days__gte=5, duration_days__lte=7)
+            elif duration == '4':
+                travels = travels.filter(duration_days__gte=8)
+        travels = [apply_promotion(travel) for travel in travels]
         return render(request, 'myfirstapp/search_results.html', {'travels': travels})
 
 def apply_promotion(travel):
@@ -145,9 +150,10 @@ def reserved_travels(request):
 
 def cancel_reservation(request, reservation_id):
     reservation = get_object_or_404(Reservation, id=reservation_id)
-    if request.user == reservation.user:
+    if request.user == reservation.my_user:
         reservation.delete()
-    return redirect('reserved_travels')
+    # return to profile page
+    return  redirect('profile')
 
 @login_required
 def administrator_dashboard(request):
@@ -249,3 +255,4 @@ def edit_travel(request, travel_id):
         return render(request, 'myfirstapp/List_travels.html', {'travel': travel})
     else:
         return render(request, 'myfirstapp/List_travels.html', {'travel': travel})
+    
