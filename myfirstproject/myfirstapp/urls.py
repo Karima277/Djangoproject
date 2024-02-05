@@ -3,7 +3,7 @@ from .views import (
     home, signup, travels, cart, reserved_travels, cancel_reservation,
     login_view, profile, reserve, success, updateprofil, reservation_view,
     administrator_dashboard, client_list, list_travels, delete_travel,
-    delete_client,add_promotion
+    delete_client,add_promotion,logout_view
 )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -18,8 +18,8 @@ urlpatterns = [
     path('profile/', profile, name='profile'),
     path('search/', views.search_results, name='search_results'),
     path('register/', views.signup, name='register'),
-    path('login/', views.login_view, name='login_view'),
-    path('logout/', views.logout_view, name='logout_view'),
+    path('login/', login_view, name='login_view'),
+    path('logout/', logout_view, name='logout_view'),
     path('cart/', cart, name='cart'),
     path('success/', success, name='success_page'),
     path('administrator/', administrator_dashboard, name='administrator_dashboard'),

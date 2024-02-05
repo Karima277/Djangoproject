@@ -49,8 +49,7 @@
     <header
         class="w-[95%] sm:w-[70%] md:w-[80%] container flex h-[60px] justify-between  items-center  lg:hidden  py-[45px] relative border-b-[1px] border-white border-opacity-40 ">
         <figure class="w-[140px]">
-            <img src="{% static 'imgs/logo-light.png' %}
-" alt="" class="w-[100%]">
+            <a href="{% url 'home_page' %}"><img src="{% static 'imgs/logo-light.png' %}" alt="" class="w-[100%]"></a>
         </figure>
         <div class=" w-1/2 h-full flex justify-end items-center ">
             <i class="bi bi-list text-3xl text-white cursor-pointer ham-menu-icon"></i>
@@ -91,12 +90,12 @@
                                 {{ user.email }}
                             </div>
                         </div>
+                        
                         <!-- END SIDEBAR USER TITLE -->
+                        <!-- div for editing user info -->
+                        
                         <!-- SIDEBAR BUTTONS -->
-                        <div class="profile-userbuttons">
-                            <button type="button" class="btn btn-success btn-sm">Follow</button>
-                            <button type="button" class="btn btn-danger btn-sm">Message</button>
-                        </div>
+                        
                         <!-- END SIDEBAR BUTTONS -->
                         <!-- SIDEBAR MENU -->
                         <div class="profile-usermenu">
@@ -110,6 +109,11 @@
                                     <a href="#">
                                         <i class="glyphicon glyphicon-user"></i>
                                         Mes Reservations </a>
+                                </li>
+                                <li id="edit-info-btn">
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-ok"></i>
+                                        Edit info </a>
                                 </li>
                             </ul>
                         </div>
@@ -187,6 +191,33 @@
                         </table>
                     </div>
                 </div>
+                <!-- end user reservation -->
+
+                <!-- begin edit user info -->
+                <div class="panel panel-default" id="edit-info" style="display: none;">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Edit User Info</h4>
+                    </div>
+                    <div class="panel-body">
+                        <form action="{% url 'updateprofil' %}" method="post">
+                            {% csrf_token %}
+                            <label for="username">Username</label>
+                            <input type="text" name="username" value="{{ user.username }}" placeholder="Username"><br>
+                            <label for="first_name">First name</label>
+                            <input type="text" name="first_name" value="{{ user.first_name }}" placeholder="First name"><br>
+                            <label for="last_name">Last name</label>
+                            <input type="text" name="last_name" value="{{ user.last_name }}" placeholder="Last name"><br>
+                            <label for="email">Email</label>
+                            <input type="email" name="email" value="{{ user.email }}" placeholder="Email"><br>
+                            <label for="birth_date">Birth date</label>
+                            <input type="date" name="birth_date" value="{{ user.birth_date }}" placeholder="Birth date"><br>
+
+                            <button type="submit">Save</button>
+                        </form>
+                                
+                    </div>
+
+                </div>
                 
             </div>
         </div>
@@ -196,12 +227,21 @@
         document.getElementById("overview-btn").addEventListener("click", function() {
             document.getElementById("overview").style.display = "block";
             document.getElementById("reservations").style.display = "none";
+            document.getElementById("edit-info").style.display = "none";
         });
     
         // Show user reservations when "mes reservations" is clicked
         document.getElementById("reservations-btn").addEventListener("click", function() {
             document.getElementById("overview").style.display = "none";
             document.getElementById("reservations").style.display = "block";
+            document.getElementById("edit-info").style.display = "none";
+        });
+
+        // Show Edit info when "edit info" is clicked
+        document.getElementById("edit-info-btn").addEventListener("click", function() {
+            document.getElementById("overview").style.display = "none";
+            document.getElementById("reservations").style.display = "none";
+            document.getElementById("edit-info").style.display = "block";
         });
     </script>
     

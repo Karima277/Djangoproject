@@ -132,9 +132,31 @@ def updateprofil(request):
         firstname = request.POST.get('first_name')
         lastname = request.POST.get('last_name')
         birth_date = request.POST.get('birth_date')
-        user.first_name = firstname
-        user.last_name = lastname
-        user.birth_date = birth_date
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+
+        if firstname:
+            user.first_name = firstname
+        else:
+            user.first_name = user.first_name
+
+        if lastname:
+            user.last_name = lastname
+        else:
+            user.last_name = user.last_name
+
+        if birth_date:
+            user.birth_date = birth_date
+        else:
+            user.birth_date = user.birth_date
+        if email:
+            user.email = email
+        else:
+            user.email = user.email
+        if username:
+            user.username = username
+        else:
+            user.username = user.username
         user.save()
         messages.success(request, 'Profile updated successfully.')
         return redirect("profile")
