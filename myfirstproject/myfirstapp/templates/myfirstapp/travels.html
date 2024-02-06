@@ -1,91 +1,96 @@
 {%load static%}
 <html>
-  <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  
-  </head>
- <body >
-<section class="w-full h-[100vh]  bg-header  bg-cover bg-no-repeat bg-center bg-color1 bg-blend-multiply bg-opacity-60 " >
-  <section class="w-full flex flex-wrap justify-center ">
-      <header 
-      class="w-[85%]  xl:w-[73%]  container hidden lg:flex justify-between h-[60px]  items-center py-[45px] border-b-[1px] border-white border-opacity-40">
-      <figure class="w-[140px]">
-         <img src="{% static 'imgs/logo-light.png' %}" alt="" class="w-[100%]">
-      </figure>
-      <nav class="h-[100%] md:w-[70%]">
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+
+<body style="background-image: url({% static 'imgs/1.jpg' %}); background-attachment: fixed;"
+  class="w-full h-[100vh]    bg-cover bg-no-repeat bg-center bg-color1 bg-blend-multiply bg-opacity-60 ">
+  <section>
+    <section class="w-full flex flex-wrap justify-center ">
+      <header
+        class="w-[85%]  xl:w-[73%]  container hidden lg:flex justify-between h-[60px]  items-center py-[45px] border-b-[1px] border-white border-opacity-40">
+        <figure class="w-[140px]">
+          <img src="{% static 'imgs/logo-light.png' %}" alt="" class="w-[100%]">
+        </figure>
+        <nav class="h-[100%] md:w-[70%]">
           <ul class="h-[100%] flex items-center gap-8 justify-end">
-              <li class="list-none  "><a class="decoration-none text-white hover:text-color3 transition-all duration-500"
-                      href="{% url 'home_page' %}">Home</a></li>
-              <li class="list-none"><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                      href="{% url 'travels' %}">Tours</a></li>
-              {% if user.is_superuser %}
-              <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+            <li class="list-none  "><a class="decoration-none text-white hover:text-color3 transition-all duration-500"
+                href="{% url 'home_page' %}">Home</a></li>
+            <li class="list-none"><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                href="{% url 'travels' %}">Tours</a></li>
+            {% if user.is_superuser %}
+            <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
                 href="{% url 'admin:index' %}">Admin</a></li>
-              <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+            <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
                 href="{% url 'logout_view' %}">Log out</a></li>
-              {% elif user.is_authenticated %}
-              <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+            {% elif user.is_authenticated %}
+            <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
                 href="{% url 'profile' %}">Profile</a></li>
-              <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+            <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
                 href="{% url 'logout_view' %}">Log out</a></li>
-              {% else %}
-              <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
-                      href="{% url 'login_view' %}">Log In</a></li>
-              {% endif %}
+            {% else %}
+            <li class="list-none "><a class="decoration-none text-white  hover:text-color3 transition-all duration-500"
+                href="{% url 'login_view' %}">Log In</a></li>
+            {% endif %}
           </ul>
-      </nav>
-  </header>
-  <div class="container" style="margin-top: 20px;">
-    
-    
-    
-    <div class="row" style="margin-top: 40px;">
-        {% for travel in Travels%}
-            <div class="col-md-4" >
-                <div class="card mb-4 box-shadow">
-                <img class="card-img-top" src="{{travel.image.url}}" alt="Maison">
-                <div  class="card-body">
-                    <h6 class="card-title d-inline-block align-middle"></h5>
-                    <div class="float-right">
-                      {% if travel.promotion %}
-                        {% if travel.promotion.start_date <= today %}
-                          {% if today <= travel.promotion.end_date %}
-                        <p class="card-subtitle mb-2 text-muted d-inline-block align-middle">
-                             {{ travel.promotion.name }} ({{ travel.promotion.discount_percentage }}% off)
-                        </p>
-                            {% endif %}
-                          {% endif %}
-                        {% endif %}
-                        <h6 class="card-subtitle mb-2 text-muted d-inline-block align-middle price text-right" > {{travel.price}}DH</h6>
-                    </div>
-                    <p class="card-text mt-3">
+        </nav>
+      </header>
+      <div class="container" style="margin-top: 20px;">
+
+
+
+        <div class="row" style="margin-top: 40px;">
+          {% for travel in Travels%}
+          <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+              <img class="card-img-top" src="{{travel.image.url}}" alt="Maison">
+              <div class="card-body">
+                <h6 class="card-title d-inline-block align-middle">
+                  </h5>
+                  <div class="float-right">
+                    {% if travel.promotion %}
+                    {% if travel.promotion.start_date <= today %} {% if today <=travel.promotion.end_date %} <p
+                      class="card-subtitle mb-2 text-muted d-inline-block align-middle">
+                      {{ travel.promotion.name }} ({{ travel.promotion.discount_percentage }}% off)
+                      </p>
+                      {% endif %}
+                      {% endif %}
+                      {% endif %}
+                      <h6 class="card-subtitle mb-2 text-muted d-inline-block align-middle price text-right">
+                        {{travel.price}}DH</h6>
+                  </div>
+                  <p class="card-text mt-3">
                     <span class="badge badge-secondary mr-2">{{travel.city}}</span>
                     <span class="badge badge-secondary mr-2">{{travel.destination}}</span>
-                   
-                    </p>
-                    
-                    <div class="d-flex justify-content-between align-items-center mt-3">
+
+                  </p>
+
+                  <div class="d-flex justify-content-between align-items-center mt-3">
                     <div class="btn-group">
-                        <a href="{% url 'travel_details' travel.id %}" class="btn btn-sm btn-outline-secondary">Details</a>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Add to cart</button>
+                      <a href="{% url 'travel_details' travel.id %}"
+                        class="btn btn-sm btn-outline-secondary">Details</a>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Add to cart</button>
                     </div>
-                    </div>
-                </div>
-                </div>
+                  </div>
+              </div>
             </div>
-            {%endfor%}
-        
-      
-  </div>
-  
+          </div>
+          {%endfor%}
+
+
+        </div>
 
 
 
- </body>
+
+</body>
 
 </html>
