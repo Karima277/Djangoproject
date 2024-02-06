@@ -51,7 +51,7 @@
           {% for travel in Travels%}
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
-              <img class="card-img-top" src="{{travel.image.url}}" alt="Maison">
+              <img class="card-img-top" src="{{travel.image.url}}" alt="Maison" style="height: 225px; width: 100%; display: block;">
               <div class="card-body">
                 <h6 class="card-title d-inline-block align-middle">
                   </h5>
@@ -78,7 +78,6 @@
                     <div class="btn-group">
                       <a href="{% url 'travel_details' travel.id %}"
                         class="btn btn-sm btn-outline-secondary">Details</a>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Add to cart</button>
                     </div>
                   </div>
               </div>
