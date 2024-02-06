@@ -2100,6 +2100,7 @@ background-color: #0069d9;
     
     
     <div class="row" style="margin-top: 40px;">
+      {% if travels %}
         {% for travel in travels %}
             <div class="col-md-4">
                 <div class="card mb-4 box-shadow">
@@ -2129,6 +2130,16 @@ background-color: #0069d9;
                 </div>
             </div>
         {% endfor %}
+      {% else %}
+      <div style="display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 10vh;
+      width: 45%;
+      ">
+        <p style="font-size: 30px; color: white;">No travels found</p>
+      </div>
+      {% endif %}
     
     
       
