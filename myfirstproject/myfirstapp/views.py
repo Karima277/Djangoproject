@@ -256,7 +256,7 @@ def add_travel(request):
         image = request.FILES.get('image')
         travel = Travel(city=city, price=price, destination=destination, duration_days=duration_days, image=image)
         travel.save()
-        return render(request, 'myfirstapp/List_travels.html', context)
+        return redirect('list_travels')
     else:
         return render(request, 'myfirstapp/List_travels.html', context)
     
