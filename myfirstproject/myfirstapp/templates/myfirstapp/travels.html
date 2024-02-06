@@ -57,13 +57,14 @@
                   </h5>
                   <div class="float-right">
                     {% if travel.promotion %}
-                    {% if travel.promotion.start_date <= today %} {% if today <=travel.promotion.end_date %} <p
+                      {% if travel.promotion.start_date <= today %}
+                        {% if today <= travel.promotion.end_date %} <p
                       class="card-subtitle mb-2 text-muted d-inline-block align-middle">
                       {{ travel.promotion.name }} ({{ travel.promotion.discount_percentage }}% off)
                       </p>
+                        {% endif %}
                       {% endif %}
-                      {% endif %}
-                      {% endif %}
+                    {% endif %}
                       <h6 class="card-subtitle mb-2 text-muted d-inline-block align-middle price text-right">
                         {{travel.price}}DH</h6>
                   </div>
